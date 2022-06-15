@@ -1,3 +1,7 @@
+## 3.3.23（2022-06-13）
+- 修复上版本引出的部分依赖未找到的Bug
+## 3.3.22（2022-06-13）
+- 新增 preferedWebPlatform 配置用于解决HBuilderX 3.4.9版本起web端platform不一致的问题 [详情](https://uniapp.dcloud.net.cn/uniCloud/uni-id?id=prefered-web-platform)
 ## 3.3.21（2022-05-24）
 - 修复createInstance传入clientInfo无效的Bug
 ## 3.3.20（2022-05-19）
