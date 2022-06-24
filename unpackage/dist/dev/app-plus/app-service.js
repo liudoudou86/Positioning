@@ -35,46 +35,6 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$3 = {
-    data() {
-      return {
-        title: "Hello"
-      };
-    },
-    onLoad() {
-    },
-    methods: {}
-  };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
-      vue.createElementVNode("image", {
-        class: "logo",
-        src: "/static/logo.png"
-      }),
-      vue.createElementVNode("view", { class: "text-area" }, [
-        vue.createElementVNode("text", { class: "title" }, vue.toDisplayString($data.title), 1)
-      ])
-    ]);
-  }
-  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/Coding/Positioning/pages/index/index.vue"]]);
-  const _sfc_main$2 = {
-    data() {
-      return {
-        title: "Map"
-      };
-    },
-    onLoad() {
-    },
-    methods: {}
-  };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
-      vue.createElementVNode("view", { class: "text-area" }, [
-        vue.createElementVNode("text", { class: "title" }, vue.toDisplayString($data.title), 1)
-      ])
-    ]);
-  }
-  var PagesMapMap = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/Coding/Positioning/pages/map/map.vue"]]);
   const _sfc_main$1 = {
     data() {
       return {
@@ -87,14 +47,15 @@ if (uni.restoreGlobal) {
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
-      vue.createElementVNode("view", { class: "text-area" }, [
-        vue.createElementVNode("text", { class: "title" }, vue.toDisplayString($data.title), 1)
+      vue.createElementVNode("view", { class: "uni-form-item uni-column" }, [
+        vue.createElementVNode("view", { class: "title" }, [
+          vue.createTextVNode(" \u5B9A\u4F4D\u542F\u52A8 "),
+          vue.createElementVNode("switch", { name: "switch" })
+        ])
       ])
     ]);
   }
   var PagesSettingSetting = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/Coding/Positioning/pages/setting/setting.vue"]]);
-  __definePage("pages/index/index", PagesIndexIndex);
-  __definePage("pages/map/map", PagesMapMap);
   __definePage("pages/setting/setting", PagesSettingSetting);
   function isDebugMode() {
     return typeof __channelId__ === "string" && __channelId__;

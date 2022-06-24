@@ -5,11 +5,6 @@
 		align-items: center;
 		justify-content: center;
 }
-.text-area {
-		display: flex;
-		justify-content: center;
-}
-.title {
-		font-size: 1.5625rem;
-		color: #000000;
+.uni-form-item .title {
+		padding: 0.625rem 0;
 }

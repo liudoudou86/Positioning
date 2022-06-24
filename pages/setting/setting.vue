@@ -1,7 +1,10 @@
 <template>
 	<view class="content">
-		<view class="text-area">
-			<text class="title">{{title}}</text>
+		<view class="uni-form-item uni-column">
+			<view class="title">
+				定位启动
+				<switch name="switch" />
+			</view>
 		</view>
 	</view>
 </template>
@@ -29,14 +32,8 @@
 		align-items: center;
 		justify-content: center;
 	}
-	
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-	
-	.title {
-		font-size: 50rpx;
-		color: #000000;
+
+	.uni-form-item .title {
+		padding: 20rpx 0;
 	}
 </style>

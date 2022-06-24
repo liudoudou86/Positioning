@@ -3,13 +3,13 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "定位控制"
+				"navigationBarTitleText": "定位"
 			}
 		},
 		{
 			"path": "pages/map/map",
 			"style": {
-				"navigationBarTitleText": "地图轨迹"
+				"navigationBarTitleText": "足迹"
 			}
 		},
 		{
@@ -35,13 +35,13 @@
 				"pagePath": "pages/index/index",
 				"iconPath": "static/icons/component.png",
 				"selectedIconPath": "static/icons/componentHL.png",
-				"text": "首页"
+				"text": "定位"
 			},
 			{
 				"pagePath": "pages/map/map",
 				"iconPath": "static/icons/extui.png",
 				"selectedIconPath": "static/icons/extuiHL.png",
-				"text": "地图"
+				"text": "足迹"
 			},
 			{
 				"pagePath": "pages/setting/setting",
