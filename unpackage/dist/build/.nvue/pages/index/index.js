@@ -1,64 +1,13 @@
+import { _ as _export_sfc, f as formatAppLog } from "../../plugin-vue_export-helper.js";
 import { openBlock, createElementBlock, createElementVNode, normalizeStyle } from "vue";
-import { _ as _export_sfc } from "../../plugin-vue_export-helper.js";
-const objectToString = Object.prototype.toString;
-const toTypeString = (value) => objectToString.call(value);
-const toRawType = (value) => {
-  return toTypeString(value).slice(8, -1);
-};
-function isDebugMode() {
-  return typeof __channelId__ === "string" && __channelId__;
-}
-function jsonStringifyReplacer(k, p) {
-  switch (toRawType(p)) {
-    case "Function":
-      return "function() { [native code] }";
-    default:
-      return p;
-  }
-}
-function normalizeLog(type, filename, args) {
-  if (isDebugMode()) {
-    args.push(filename.replace("at ", "uni-app:///"));
-    return console[type].apply(console, args);
-  }
-  const msgs = args.map(function(v) {
-    const type2 = toTypeString(v).toLowerCase();
-    if (["[object object]", "[object array]", "[object module]"].indexOf(type2) !== -1) {
-      try {
-        v = "---BEGIN:JSON---" + JSON.stringify(v, jsonStringifyReplacer) + "---END:JSON---";
-      } catch (e) {
-        v = type2;
-      }
-    } else {
-      if (v === null) {
-        v = "---NULL---";
-      } else if (v === void 0) {
-        v = "---UNDEFINED---";
-      } else {
-        const vType = toRawType(v).toUpperCase();
-        if (vType === "NUMBER" || vType === "BOOLEAN") {
-          v = "---BEGIN:" + vType + "---" + v + "---END:" + vType + "---";
-        } else {
-          v = String(v);
-        }
-      }
-    }
-    return v;
-  });
-  return msgs.join("---COMMA---") + " " + filename;
-}
-function formatAppLog(type, filename, ...args) {
-  const res = normalizeLog(type, filename, args);
-  res && console[type](res);
-}
 var _style_0 = { "content": { "": { "flex": 1 } }, "map": { "": { "width": "750rpx", "height": 250, "backgroundColor": "#f0f0f0" } } };
 const _sfc_main = {
   data() {
     return {
-      latitude: 39.9,
-      longitude: 116.4,
-      circles: [],
-      markers: []
+      latitude: "",
+      longitude: "",
+      markers: [],
+      circles: []
     };
   },
   onLoad() {
@@ -75,16 +24,19 @@ const _sfc_main = {
       const that = this;
       uni.getLocation({
         type: "wgs84",
+        geocode: true,
         success: function(res) {
-          formatAppLog("log", "at pages/index/index.nvue:37", "\u5F53\u524D\u4F4D\u7F6E\uFF1A" + res);
           that.latitude = res.latitude;
           that.longitude = res.longitude;
+          formatAppLog("log", "at pages/index/index.nvue:39", res.latitude);
+          formatAppLog("log", "at pages/index/index.nvue:40", res.longitude);
           that.markers = [{
             id: 1,
             latitude: res.latitude,
             longitude: res.longitude,
-            iconPath: "/static/location.png"
-          }], that.circles = [{
+            iconPath: "../../../static/img/pos.png"
+          }];
+          that.circles = [{
             latitude: res.latitude,
             longitude: res.longitude,
             fillColor: "#D9E6EF",
@@ -92,6 +44,9 @@ const _sfc_main = {
             radius: 50,
             strokeWidth: 2
           }];
+        },
+        fail: function(err) {
+          formatAppLog("log", "at pages/index/index.nvue:58", err);
         }
       });
     }
@@ -108,13 +63,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     createElementVNode("view", { class: "content" }, [
       createElementVNode("map", {
         scale: 18,
-        id: "myMap",
+        onUpdated: _cache[0] || (_cache[0] = ($event) => $options.getLocationInfo()),
         style: normalizeStyle([{ "width": "100%" }, { height: _ctx.mapHeight + "px" }]),
-        markers: $data.markers,
         longitude: $data.longitude,
         latitude: $data.latitude,
+        markers: $data.markers,
         circles: $data.circles
-      }, null, 12, ["markers", "longitude", "latitude", "circles"])
+      }, null, 44, ["longitude", "latitude", "markers", "circles"])
     ])
   ]);
 }

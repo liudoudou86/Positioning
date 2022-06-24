@@ -140,34 +140,39 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
           _this.mapHeight = _this.mapHeight;
         }
       });
-      uni.getLocation({
-        type: "gcj02",
-        success: function(res) {
-          formatAppLog("log", "at pages/index/index.nvue:31", res);
-          that.latitude = res.latitude;
-          that.longitude = res.longitude;
-          var obj = {
-            width: 30,
-            height: 30,
-            latitude: that.latitude,
-            longitude: that.longitude,
-            iconPath: "/static/location.png"
-          };
-          var arr = [];
-          arr.push(obj);
-          that.markers = arr;
-          that.circles = [{
-            latitude: res.latitude,
-            longitude: res.longitude,
-            fillColor: "#D9E6EF",
-            color: "#A7B6CB",
-            radius: 50,
-            strokeWidth: 2
-          }];
-        }
-      });
     },
-    methods: {}
+    methods: {
+      getLocationInfo() {
+        const that = this;
+        uni.getLocation({
+          type: "wgs84",
+          geocode: true,
+          success: function(res) {
+            that.latitude = res.latitude;
+            that.longitude = res.longitude;
+            formatAppLog("log", "at pages/index/index.nvue:39", res.latitude);
+            formatAppLog("log", "at pages/index/index.nvue:40", res.longitude);
+            that.markers = [{
+              id: 1,
+              latitude: res.latitude,
+              longitude: res.longitude,
+              iconPath: "../../../static/img/pos.png"
+            }];
+            that.circles = [{
+              latitude: res.latitude,
+              longitude: res.longitude,
+              fillColor: "#D9E6EF",
+              color: "#A7B6CB",
+              radius: 50,
+              strokeWidth: 2
+            }];
+          },
+          fail: function(err) {
+            formatAppLog("log", "at pages/index/index.nvue:58", err);
+          }
+        });
+      }
+    }
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0, import_vue.openBlock)(), (0, import_vue.createElementBlock)("scroll-view", {
@@ -180,12 +185,13 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
       (0, import_vue.createElementVNode)("view", { class: "content" }, [
         (0, import_vue.createElementVNode)("map", {
           scale: 18,
+          onUpdated: _cache[0] || (_cache[0] = ($event) => $options.getLocationInfo()),
           style: (0, import_vue.normalizeStyle)([{ "width": "100%" }, { height: _ctx.mapHeight + "px" }]),
           longitude: $data.longitude,
           latitude: $data.latitude,
           markers: $data.markers,
           circles: $data.circles
-        }, null, 12, ["longitude", "latitude", "markers", "circles"])
+        }, null, 44, ["longitude", "latitude", "markers", "circles"])
       ])
     ]);
   }

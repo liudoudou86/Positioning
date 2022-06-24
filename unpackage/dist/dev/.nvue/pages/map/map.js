@@ -2,6 +2,14 @@ import { openBlock, createElementBlock, createElementVNode, normalizeStyle } fro
 import { _ as _export_sfc } from "../../plugin-vue_export-helper.js";
 var _style_0 = { "content": { "": { "flex": 1 } }, "map": { "": { "width": "750rpx", "height": 250, "backgroundColor": "#f0f0f0" } } };
 const _sfc_main = {
+  data() {
+    return {
+      latitude: 39.9,
+      longitude: 116.4,
+      markers: [],
+      circles: []
+    };
+  },
   onLoad() {
     const _this = this;
     uni.getSystemInfo({
@@ -10,7 +18,8 @@ const _sfc_main = {
         _this.mapHeight = _this.mapHeight;
       }
     });
-  }
+  },
+  methods: {}
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("scroll-view", {
@@ -23,13 +32,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     createElementVNode("view", { class: "content" }, [
       createElementVNode("map", {
         scale: 18,
-        id: "myMap",
         style: normalizeStyle([{ "width": "100%" }, { height: _ctx.mapHeight + "px" }]),
-        markers: _ctx.markers,
-        longitude: _ctx.longitude,
-        latitude: _ctx.latitude,
-        circles: _ctx.circles
-      }, null, 12, ["markers", "longitude", "latitude", "circles"])
+        longitude: $data.longitude,
+        latitude: $data.latitude,
+        markers: $data.markers,
+        circles: $data.circles
+      }, null, 12, ["longitude", "latitude", "markers", "circles"])
     ])
   ]);
 }

@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<map :scale='18' @tap="getLocationInfo" style="width: 100%;" :style="{height: mapHeight + 'px'}" 
+		<map :scale='18' @updated='getLocationInfo()' style="width: 100%;" :style="{height: mapHeight + 'px'}" 
 		:longitude="longitude" :latitude="latitude" :markers="markers" :circles="circles">
 		</map>
 	</view>
@@ -24,28 +24,27 @@
 					_this.mapHeight = res.screenHeight - res.statusBarHeight
 					_this.mapHeight = _this.mapHeight
 				}
-			})
+			});
 		},
 		methods: {
 			// 获取地理位置
 			getLocationInfo() {
 				const that = this
 				uni.getLocation({
-					type: 'gcj02',
+					type: 'wgs84',
+					geocode: true,
 					success: function(res) {
-						console.log(res)
 						that.latitude = res.latitude
 						that.longitude = res.longitude
-						var obj = {
-							width: 30,
-							height: 30,
-							latitude: that.latitude,
-							longitude: that.longitude,
-							iconPath: '/static/location.png'
-						};
-						var arr = [];
-						arr.push(obj);
-						that.markers = arr;
+						console.log(res.latitude)
+						console.log(res.longitude)
+						//标记点
+						that.markers = [{
+							id: 1,
+							latitude: res.latitude,
+							longitude: res.longitude,
+							iconPath: '../../../static/img/pos.png',
+						}]
 						that.circles = [{ //在地图上显示圆
 							latitude: res.latitude,
 							longitude: res.longitude,
@@ -54,9 +53,11 @@
 							radius: 50, //半径
 							strokeWidth: 2 //描边的宽度
 						}]
+					},
+					fail: function(err) {
+						console.log(err)
 					}
 				});
-						
 			}
 		}
 	}

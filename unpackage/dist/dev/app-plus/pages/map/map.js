@@ -71,6 +71,14 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   // ../../../Positioning/unpackage/dist/dev/.nvue/pages/map/map.js
   var _style_0 = { "content": { "": { "flex": 1 } }, "map": { "": { "width": "750rpx", "height": 250, "backgroundColor": "#f0f0f0" } } };
   var _sfc_main = {
+    data() {
+      return {
+        latitude: 39.9,
+        longitude: 116.4,
+        markers: [],
+        circles: []
+      };
+    },
     onLoad() {
       const _this = this;
       uni.getSystemInfo({
@@ -79,7 +87,8 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
           _this.mapHeight = _this.mapHeight;
         }
       });
-    }
+    },
+    methods: {}
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0, import_vue.openBlock)(), (0, import_vue.createElementBlock)("scroll-view", {
@@ -92,13 +101,12 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
       (0, import_vue.createElementVNode)("view", { class: "content" }, [
         (0, import_vue.createElementVNode)("map", {
           scale: 18,
-          id: "myMap",
           style: (0, import_vue.normalizeStyle)([{ "width": "100%" }, { height: _ctx.mapHeight + "px" }]),
-          markers: _ctx.markers,
-          longitude: _ctx.longitude,
-          latitude: _ctx.latitude,
-          circles: _ctx.circles
-        }, null, 12, ["markers", "longitude", "latitude", "circles"])
+          longitude: $data.longitude,
+          latitude: $data.latitude,
+          markers: $data.markers,
+          circles: $data.circles
+        }, null, 12, ["longitude", "latitude", "markers", "circles"])
       ])
     ]);
   }
