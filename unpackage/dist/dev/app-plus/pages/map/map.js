@@ -69,14 +69,18 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   };
 
   // ../../../Positioning/unpackage/dist/dev/.nvue/pages/map/map.js
-  var _style_0 = { "content": { "": { "flex": 1 } }, "map": { "": { "width": "750rpx", "height": 250, "backgroundColor": "#f0f0f0" } } };
+  var _style_0 = { "content": { "": { "flex": 1 } } };
   var _sfc_main = {
     data() {
       return {
-        latitude: 39.9,
-        longitude: 116.4,
-        markers: [],
-        circles: []
+        latitude: 39.54,
+        longitude: 116.23,
+        markers: [{
+          id: 0,
+          latitude: 39.54,
+          longitude: 116.23,
+          iconPath: "/static/location.png"
+        }]
       };
     },
     onLoad() {
@@ -104,9 +108,8 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
           style: (0, import_vue.normalizeStyle)([{ "width": "100%" }, { height: _ctx.mapHeight + "px" }]),
           longitude: $data.longitude,
           latitude: $data.latitude,
-          markers: $data.markers,
-          circles: $data.circles
-        }, null, 12, ["longitude", "latitude", "markers", "circles"])
+          markers: $data.markers
+        }, null, 12, ["longitude", "latitude", "markers"])
       ])
     ]);
   }

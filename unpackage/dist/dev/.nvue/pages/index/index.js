@@ -1,4 +1,4 @@
-import { openBlock, createElementBlock, createElementVNode, normalizeStyle } from "vue";
+import { resolveComponent, openBlock, createElementBlock, createElementVNode, normalizeStyle, createVNode, withCtx, createTextVNode } from "vue";
 import { _ as _export_sfc } from "../../plugin-vue_export-helper.js";
 Object.freeze({});
 Object.freeze([]);
@@ -53,12 +53,12 @@ function formatAppLog(type, filename, ...args) {
   const res = normalizeLog(type, filename, args);
   res && console[type](res);
 }
-var _style_0 = { "content": { "": { "flex": 1 } }, "map": { "": { "width": "750rpx", "height": 250, "backgroundColor": "#f0f0f0" } } };
+var _style_0 = { "content": { "": { "flex": 1 } }, "uni-padding-wrap": { "": { "marginTop": "30rpx", "marginBottom": "30rpx", "marginLeft": "30rpx", "marginRight": "30rpx" } } };
 const _sfc_main = {
   data() {
     return {
-      latitude: "",
-      longitude: "",
+      latitude: 39.54,
+      longitude: 116.23,
       markers: [],
       circles: []
     };
@@ -67,7 +67,7 @@ const _sfc_main = {
     const _this = this;
     uni.getSystemInfo({
       success: (res) => {
-        _this.mapHeight = res.screenHeight - res.statusBarHeight;
+        _this.mapHeight = res.screenHeight - res.statusBarHeight - 150;
         _this.mapHeight = _this.mapHeight;
       }
     });
@@ -76,36 +76,35 @@ const _sfc_main = {
     getLocationInfo() {
       const that = this;
       uni.getLocation({
-        type: "wgs84",
-        geocode: true,
+        type: "gcj02",
+        isHighAccuracy: true,
         success: function(res) {
           that.latitude = res.latitude;
           that.longitude = res.longitude;
-          formatAppLog("log", "at pages/index/index.nvue:39", res.latitude);
-          formatAppLog("log", "at pages/index/index.nvue:40", res.longitude);
+          formatAppLog("log", "at pages/index/index.nvue:42", res);
           that.markers = [{
-            id: 1,
+            id: 0,
             latitude: res.latitude,
             longitude: res.longitude,
-            iconPath: "../../../static/img/pos.png"
-          }];
-          that.circles = [{
+            iconPath: "/static/location.png"
+          }], that.circles = [{
             latitude: res.latitude,
             longitude: res.longitude,
             fillColor: "#D9E6EF",
             color: "#A7B6CB",
-            radius: 50,
-            strokeWidth: 2
+            radius: 30,
+            strokeWidth: 3
           }];
         },
         fail: function(err) {
-          formatAppLog("log", "at pages/index/index.nvue:58", err);
+          formatAppLog("log", "at pages/index/index.nvue:60", err);
         }
       });
     }
   }
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_button = resolveComponent("button");
   return openBlock(), createElementBlock("scroll-view", {
     scrollY: true,
     showScrollbar: true,
@@ -123,6 +122,17 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         markers: $data.markers,
         circles: $data.circles
       }, null, 44, ["longitude", "latitude", "markers", "circles"])
+    ]),
+    createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
+      createVNode(_component_button, {
+        type: "primary",
+        onClick: _cache[1] || (_cache[1] = ($event) => $options.getLocationInfo())
+      }, {
+        default: withCtx(() => [
+          createTextVNode("\u5237\u65B0\u4F4D\u7F6E")
+        ]),
+        _: 1
+      })
     ])
   ]);
 }

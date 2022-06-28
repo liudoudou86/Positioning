@@ -1,5 +1,5 @@
 {
-    "name" : "Positioning",
+    "name" : "Angel",
     "appid" : "__UNI__BA53D3D",
     "description" : "",
     "versionName" : "1.0.0",
@@ -63,8 +63,10 @@
                     }
                 },
                 "geolocation" : {
-                    "system" : {
-                        "__platform__" : [ "android" ]
+                    "amap" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appkey_ios" : "5e35de021d41a959b024296db0fa1b58",
+                        "appkey_android" : "8375ea59476ea77e6c1acc361cef4431"
                     }
                 },
                 "push" : {

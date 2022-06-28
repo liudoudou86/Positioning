@@ -5,7 +5,7 @@
     "iPad"
   ],
   "id": "__UNI__BA53D3D",
-  "name": "Positioning",
+  "name": "Angel",
   "version": {
     "name": "1.0.0",
     "code": "100"
@@ -90,10 +90,13 @@
           }
         },
         "geolocation": {
-          "system": {
+          "amap": {
             "__platform__": [
+              "ios",
               "android"
-            ]
+            ],
+            "appkey_ios": "5e35de021d41a959b024296db0fa1b58",
+            "appkey_android": "8375ea59476ea77e6c1acc361cef4431"
           }
         },
         "push": {

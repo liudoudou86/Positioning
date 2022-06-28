@@ -26,37 +26,8 @@ if (typeof uni !== "undefined" && uni && uni.requireGlobal) {
 if (uni.restoreGlobal) {
   uni.restoreGlobal(Vue, weex, plus, setTimeout, clearTimeout, setInterval, clearInterval);
 }
-(function(vue, shared) {
+(function(shared, vue) {
   "use strict";
-  var _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-  const _sfc_main$1 = {
-    data() {
-      return {
-        title: "Setting"
-      };
-    },
-    onLoad() {
-    },
-    methods: {}
-  };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
-      vue.createElementVNode("view", { class: "uni-form-item uni-column" }, [
-        vue.createElementVNode("view", { class: "title" }, [
-          vue.createTextVNode(" \u5B9A\u4F4D\u542F\u52A8 "),
-          vue.createElementVNode("switch", { name: "switch" })
-        ])
-      ])
-    ]);
-  }
-  var PagesSettingSetting = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/Coding/Positioning/pages/setting/setting.vue"]]);
-  __definePage("pages/setting/setting", PagesSettingSetting);
   function isDebugMode() {
     return typeof __channelId__ === "string" && __channelId__;
   }
@@ -103,6 +74,56 @@ if (uni.restoreGlobal) {
     const res = normalizeLog(type, filename, args);
     res && console[type](res);
   }
+  var _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$1 = {
+    data() {
+      return {};
+    },
+    onLoad() {
+    },
+    methods: {
+      switchChange: function(e) {
+        formatAppLog("log", "at pages/setting/setting.vue:19", e.detail.value);
+        var switchcontrol = e.detail.value;
+        if (switchcontrol == true) {
+          formatAppLog("log", "at pages/setting/setting.vue:22", "success");
+          uni.getLocation({
+            type: "gcj02",
+            isHighAccuracy: true,
+            success: function(res) {
+              var latitude = res.latitude;
+              var longitude = res.longitude;
+              formatAppLog("log", "at pages/setting/setting.vue:29", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + latitude);
+              formatAppLog("log", "at pages/setting/setting.vue:30", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + longitude);
+            },
+            fail: function(err) {
+              formatAppLog("log", "at pages/setting/setting.vue:33", err);
+            }
+          });
+        }
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
+      vue.createElementVNode("view", { class: "uni-form-item uni-column" }, [
+        vue.createElementVNode("view", { class: "title" }, [
+          vue.createTextVNode("\u5B9A\u4F4D\u542F\u52A8 "),
+          vue.createElementVNode("switch", {
+            onChange: _cache[0] || (_cache[0] = (...args) => $options.switchChange && $options.switchChange(...args))
+          }, null, 32)
+        ])
+      ])
+    ]);
+  }
+  var PagesSettingSetting = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/Coding/Positioning/pages/setting/setting.vue"]]);
+  __definePage("pages/setting/setting", PagesSettingSetting);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");
@@ -129,4 +150,4 @@ if (uni.restoreGlobal) {
   __app__._component.render = () => {
   };
   __app__.mount("#app");
-})(Vue, uni.VueShared);
+})(uni.VueShared, Vue);
