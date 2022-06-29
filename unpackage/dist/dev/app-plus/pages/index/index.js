@@ -159,14 +159,13 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
             }], that.circles = [{
               latitude: res.latitude,
               longitude: res.longitude,
-              fillColor: "#D9E6EF",
               color: "#A7B6CB",
-              radius: 30,
+              radius: 50,
               strokeWidth: 3
             }];
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/index/index.nvue:60", err);
+            formatAppLog("log", "at pages/index/index.nvue:59", err);
           }
         });
       }

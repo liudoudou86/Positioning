@@ -73,12 +73,12 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   var _sfc_main = {
     data() {
       return {
-        latitude: 39.54,
-        longitude: 116.23,
+        latitude: 39.909,
+        longitude: 116.39742,
         markers: [{
           id: 0,
-          latitude: 39.54,
-          longitude: 116.23,
+          latitude: 39.909,
+          longitude: 116.39742,
           iconPath: "/static/location.png"
         }]
       };

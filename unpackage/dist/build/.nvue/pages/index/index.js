@@ -51,13 +51,14 @@ function formatAppLog(type, filename, ...args) {
   const res = normalizeLog(type, filename, args);
   res && console[type](res);
 }
-var _style_0 = { "content": { "": { "flex": 1 } }, "map": { "": { "backgroundColor": "#f0f0f0" } } };
+var _style_0 = { "content": { "": { "flex": 1 } }, "uni-padding-wrap": { "": { "marginTop": "30rpx", "marginBottom": "30rpx", "marginLeft": "30rpx", "marginRight": "30rpx" } } };
 const _sfc_main = {
   data() {
     return {
       latitude: 39.54,
       longitude: 116.23,
-      markers: []
+      markers: [],
+      circles: []
     };
   },
   onLoad() {
@@ -74,19 +75,27 @@ const _sfc_main = {
       const that = this;
       uni.getLocation({
         type: "gcj02",
+        isHighAccuracy: true,
         success: function(res) {
           that.latitude = res.latitude;
           that.longitude = res.longitude;
-          formatAppLog("log", "at pages/index/index.nvue:40", res);
+          formatAppLog("log", "at pages/index/index.nvue:42", res);
           that.markers = [{
             id: 0,
             latitude: res.latitude,
             longitude: res.longitude,
             iconPath: "/static/location.png"
+          }], that.circles = [{
+            latitude: res.latitude,
+            longitude: res.longitude,
+            fillColor: "#D9E6EF",
+            color: "#A7B6CB",
+            radius: 30,
+            strokeWidth: 3
           }];
         },
         fail: function(err) {
-          formatAppLog("log", "at pages/index/index.nvue:50", err);
+          formatAppLog("log", "at pages/index/index.nvue:60", err);
         }
       });
     }
@@ -108,8 +117,9 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         style: normalizeStyle([{ "width": "100%" }, { height: _ctx.mapHeight + "px" }]),
         longitude: $data.longitude,
         latitude: $data.latitude,
-        markers: $data.markers
-      }, null, 44, ["longitude", "latitude", "markers"])
+        markers: $data.markers,
+        circles: $data.circles
+      }, null, 44, ["longitude", "latitude", "markers", "circles"])
     ]),
     createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
       createVNode(_component_button, {
@@ -117,7 +127,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         onClick: _cache[1] || (_cache[1] = ($event) => $options.getLocationInfo())
       }, {
         default: withCtx(() => [
-          createTextVNode("\u5237\u65B0")
+          createTextVNode("\u5237\u65B0\u4F4D\u7F6E")
         ]),
         _: 1
       })

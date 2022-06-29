@@ -1,0 +1,7 @@
+{
+  "name": "insertPositionData",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

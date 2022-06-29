@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="uni-form-item uni-column">
-			<view class="title">定位启动
+			<view class="title">后台定位
 				<switch @change="switchChange" />
 			</view>
 		</view>
@@ -9,6 +9,8 @@
 </template>
 
 <script>
+	import time from '@/common/time.js'; // 引用自定义函数
+	
 	export default {
 		data() {
 			return {}
@@ -16,25 +18,49 @@
 		onLoad() {},
 		methods: {
 			switchChange: function (e) {
-				console.log(e.detail.value)
 				var switchcontrol = e.detail.value
 				if (switchcontrol == true) {
-					console.log("success")
+					const that = this
 					uni.getLocation({
 						type: 'gcj02', // gcj02为高德定位
 						isHighAccuracy: true, // 高精度定位
 						success: function(res) {
-							var latitude = res.latitude
-							var longitude = res.longitude
-							console.log("当前纬度：" + latitude)
-							console.log("当前经度：" + longitude)
+							that.latitude = res.latitude
+							that.longitude = res.longitude
 						},
 						fail: function(err) {
 							console.log(err)
 						},
 					});
+					uni.getSystemInfo({
+						success: function(res) {
+							that.deviceId = res.deviceId
+							that.deviceModel = res.deviceModel
+						},
+						fail: function(err) {
+							console.log(err)
+						}
+					});
+					console.log("当前纬度：" + this.latitude);
+					console.log("当前经度：" + this.longitude);
+					console.log("设备ID：" + this.deviceId);
+					console.log("设备型号：" + this.deviceModel);
+					uniCloud.callFunction({
+						name: "insertPositionData",
+						data: {
+							deviceID: this.deviceId,
+							deviceName: this.deviceModel,
+							latitude: this.latitude,
+							longitude: this.longitude,
+							createTime: time.now()
+						}
+					}).then((res) => {
+						console.log(res)
+					}).catch((err) =>{
+						console.log(err)
+					})
 				}
-			}
+			},
 		}
 	}
 </script>
@@ -48,6 +74,7 @@
 	}
 
 	.uni-form-item .title {
-		padding: 20rpx 0;
+		padding: 50rpx 0;
 	}
+
 </style>

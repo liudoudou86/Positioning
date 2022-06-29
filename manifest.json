@@ -1,5 +1,5 @@
 {
-    "name" : "Angel",
+    "name" : "阿丘比特",
     "appid" : "__UNI__BA53D3D",
     "description" : "",
     "versionName" : "1.0.0",
@@ -49,7 +49,8 @@
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
-                "autoSdkPermissions" : true
+                "autoSdkPermissions" : true,
+                "minSdkVersion" : 21
             },
             /* ios打包配置 */
             "ios" : {},

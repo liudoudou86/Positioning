@@ -11,12 +11,12 @@
 		data() {
 			return {
 				// 在data中初始化的中心位置
-				latitude: 39.54,
-				longitude: 116.23,
+				latitude: 39.909,
+				longitude: 116.39742,
 				markers: [{
 					id: 0,
-					latitude: 39.54,
-					longitude: 116.23,
+					latitude: 39.909,
+					longitude: 116.39742,
 					iconPath: '/static/location.png'
 				}]
 			}

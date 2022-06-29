@@ -50,9 +50,8 @@
 						that.circles = [{
 							latitude: res.latitude,
 							longitude: res.longitude,
-							fillColor: "#D9E6EF", //填充颜色
 							color: "#A7B6CB", //描边的颜色
-							radius: 30, //半径
+							radius: 50, //半径
 							strokeWidth: 3 //描边的宽度
 						}]
 					},

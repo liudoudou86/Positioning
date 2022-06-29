@@ -1,0 +1,7 @@
+{
+  "name": "readPositionData",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
