@@ -4,7 +4,7 @@ exports.main = async (event, context) => {
 	console.log('event : ', event)
 	// 初始化数据库
 	const db = uniCloud.database();
-	// 向info表插入数据
+	// 向info表插入客户端的数据
 	const res = await db.collection('info').add(event);
 	console.log(res)
 	//返回数据给客户端

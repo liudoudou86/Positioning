@@ -588,7 +588,7 @@ if (uni.restoreGlobal) {
   function l(e) {
     return e && typeof e == "string" ? JSON.parse(e) : e;
   }
-  const h = true, d = "app", f = l('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 54912,\n    "initialLaunchType": "local",\n    "servePort": 54914,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), p = l('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
+  const h = true, d = "app", f = l('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 50340,\n    "initialLaunchType": "local",\n    "servePort": 50341,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), p = l('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   let m = "";
   try {
     m = "__UNI__BA53D3D";
@@ -2392,9 +2392,9 @@ if (uni.restoreGlobal) {
               createTime: time.now()
             }
           }).then((res) => {
-            formatAppLog("log", "at pages/setting/setting.vue:58", res);
+            formatAppLog("log", "at pages/setting/setting.vue:59", res);
           }).catch((err) => {
-            formatAppLog("log", "at pages/setting/setting.vue:60", err);
+            formatAppLog("log", "at pages/setting/setting.vue:61", err);
           });
         }
       }

@@ -56,19 +56,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
     }
   });
 
-  // ../../../Positioning/unpackage/dist/dev/.nvue/pages/index/index.js
-  var import_vue = __toESM(require_vue());
-
   // ../../../Positioning/unpackage/dist/dev/.nvue/plugin-vue_export-helper.js
-  var _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-
-  // ../../../Positioning/unpackage/dist/dev/.nvue/pages/index/index.js
   Object.freeze({});
   Object.freeze([]);
   var objectToString = Object.prototype.toString;
@@ -122,12 +110,22 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
     const res = normalizeLog(type, filename, args);
     res && console[type](res);
   }
+  var _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
+
+  // ../../../Positioning/unpackage/dist/dev/.nvue/pages/index/index.js
+  var import_vue = __toESM(require_vue());
   var _style_0 = { "content": { "": { "flex": 1 } }, "uni-padding-wrap": { "": { "marginTop": "30rpx", "marginBottom": "30rpx", "marginLeft": "30rpx", "marginRight": "30rpx" } } };
   var _sfc_main = {
     data() {
       return {
-        latitude: 39.54,
-        longitude: 116.23,
+        latitude: "",
+        longitude: "",
         markers: [],
         circles: []
       };
@@ -160,8 +158,8 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
               latitude: res.latitude,
               longitude: res.longitude,
               color: "#A7B6CB",
-              radius: 50,
-              strokeWidth: 3
+              radius: 30,
+              strokeWidth: 5
             }];
           },
           fail: function(err) {

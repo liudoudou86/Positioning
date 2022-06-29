@@ -1,0 +1,35 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"deviceID": {
+			"bsonType": "int",
+			"description": "获取的设备ID"
+		},
+		"deviceName": {
+			"bsonType": "string",
+			"description": "获取设备名称"
+		},
+		"latitude": {
+			"bsonType": "int",
+			"description": "获取纬度"
+		},
+		"longitude": {
+			"bsonType": "int",
+			"description": "获取经度"
+		},
+		"createTime": {
+			"bsonType": "data",
+			"description": "创建时间"
+		}
+	}
+}

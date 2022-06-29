@@ -14,8 +14,8 @@
 		data() {
 			return {
 				// 在data中初始化的中心位置
-				latitude: 39.54,
-				longitude: 116.23,
+				latitude: '',
+				longitude: '',
 				markers: [],
 				circles: []
 			}
@@ -51,8 +51,8 @@
 							latitude: res.latitude,
 							longitude: res.longitude,
 							color: "#A7B6CB", //描边的颜色
-							radius: 50, //半径
-							strokeWidth: 3 //描边的宽度
+							radius: 30, //半径
+							strokeWidth: 5 //描边的宽度
 						}]
 					},
 					fail: function(err) {

@@ -9,4 +9,4 @@
 // 详细JQL语法，请参考 https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=jsquery
 
 // 下面示例查询uni-id-users表的所有数据
-db.collection('info').get();
+db.collection('info').where('deviceID == "80703833cbfcc1f9"').orderBy('createTime').limit(1).get();

@@ -1,3 +1,4 @@
+// 自定义封装时间函数
 const now = function() {
 	var date = new Date();
 	var year = date.getFullYear(); //获取完整的年份(4位)

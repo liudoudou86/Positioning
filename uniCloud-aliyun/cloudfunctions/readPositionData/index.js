@@ -5,7 +5,7 @@ exports.main = async (event, context) => {
 	// 初始化数据库
 	const db = uniCloud.database();
 	// 向info表插入数据
-	const res = await db.collection('info').get(event);
+	const res = await db.collection('info').where(event).orderBy('createTime').limit(1).get();
 	console.log(res)
 	//返回数据给客户端
 	return res

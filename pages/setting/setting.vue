@@ -20,7 +20,7 @@
 			switchChange: function (e) {
 				var switchcontrol = e.detail.value
 				if (switchcontrol == true) {
-					const that = this
+					const that = this // 将this值传出去
 					uni.getLocation({
 						type: 'gcj02', // gcj02为高德定位
 						isHighAccuracy: true, // 高精度定位
@@ -45,6 +45,7 @@
 					console.log("当前经度：" + this.longitude);
 					console.log("设备ID：" + this.deviceId);
 					console.log("设备型号：" + this.deviceModel);
+					// 调用云函数向云数据库插入数据
 					uniCloud.callFunction({
 						name: "insertPositionData",
 						data: {
