@@ -588,7 +588,7 @@ if (uni.restoreGlobal) {
   function l(e) {
     return e && typeof e == "string" ? JSON.parse(e) : e;
   }
-  const h = true, d = "app", f = l('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 50340,\n    "initialLaunchType": "local",\n    "servePort": 50341,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), p = l('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
+  const h = true, d = "app", f = l('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 49968,\n    "initialLaunchType": "local",\n    "servePort": 49969\n}\n'), p = l('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   let m = "";
   try {
     m = "__UNI__BA53D3D";
@@ -2347,7 +2347,104 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$1 = {
+  const _sfc_main$5 = {
+    data() {
+      return {
+        latitude: "",
+        longitude: "",
+        markers: [],
+        circles: []
+      };
+    },
+    onLoad() {
+      const _this = this;
+      uni.getSystemInfo({
+        success: (res) => {
+          _this.mapHeight = res.screenHeight - res.statusBarHeight - 150;
+          _this.mapHeight = _this.mapHeight;
+        }
+      });
+    },
+    methods: {
+      getLocationInfo() {
+        const that = this;
+        uni.getLocation({
+          type: "gcj02",
+          isHighAccuracy: true,
+          success: function(res) {
+            that.latitude = res.latitude;
+            that.longitude = res.longitude;
+            formatAppLog("log", "at pages/index/index.vue:44", res);
+            that.markers = [{
+              id: 0,
+              latitude: res.latitude,
+              longitude: res.longitude,
+              iconPath: "/static/location.png"
+            }], that.circles = [{
+              latitude: res.latitude,
+              longitude: res.longitude,
+              color: "#A7B6CB",
+              radius: 30,
+              strokeWidth: 5
+            }];
+          },
+          fail: function(err) {
+            formatAppLog("log", "at pages/index/index.vue:61", err);
+          }
+        });
+        uni.getSystemInfo({
+          success: function(res) {
+            that.deviceId = res.deviceId;
+            that.deviceModel = res.deviceModel;
+          },
+          fail: function(err) {
+            formatAppLog("log", "at pages/index/index.vue:70", err);
+          }
+        });
+        formatAppLog("log", "at pages/index/index.vue:73", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + this.latitude);
+        formatAppLog("log", "at pages/index/index.vue:74", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + this.longitude);
+        formatAppLog("log", "at pages/index/index.vue:75", "\u8BBE\u5907ID\uFF1A" + this.deviceId);
+        formatAppLog("log", "at pages/index/index.vue:76", "\u8BBE\u5907\u578B\u53F7\uFF1A" + this.deviceModel);
+        Rt.callFunction({
+          name: "insertPositionData",
+          data: {
+            deviceID: this.deviceId,
+            deviceName: this.deviceModel,
+            latitude: this.latitude,
+            longitude: this.longitude,
+            createTime: time.now()
+          }
+        }).then((res) => {
+          formatAppLog("log", "at pages/index/index.vue:88", res);
+        }).catch((err) => {
+          formatAppLog("log", "at pages/index/index.vue:90", err);
+        });
+      }
+    }
+  };
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", { class: "content" }, [
+        vue.createElementVNode("map", {
+          scale: 18,
+          onUpdated: _cache[0] || (_cache[0] = ($event) => $options.getLocationInfo()),
+          style: vue.normalizeStyle([{ "width": "100%" }, { height: _ctx.mapHeight + "px" }]),
+          longitude: $data.longitude,
+          latitude: $data.latitude,
+          markers: $data.markers,
+          circles: $data.circles
+        }, null, 44, ["longitude", "latitude", "markers", "circles"])
+      ]),
+      vue.createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
+        vue.createElementVNode("button", {
+          type: "primary",
+          onClick: _cache[1] || (_cache[1] = ($event) => $options.getLocationInfo())
+        }, "\u5237\u65B0\u4F4D\u7F6E")
+      ])
+    ], 64);
+  }
+  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "D:/Coding/Positioning/pages/index/index.vue"]]);
+  const _sfc_main$4 = {
     data() {
       return {};
     },
@@ -2366,7 +2463,7 @@ if (uni.restoreGlobal) {
               that.longitude = res.longitude;
             },
             fail: function(err) {
-              formatAppLog("log", "at pages/setting/setting.vue:32", err);
+              formatAppLog("log", "at pages/map/map.vue:36", err);
             }
           });
           uni.getSystemInfo({
@@ -2375,13 +2472,13 @@ if (uni.restoreGlobal) {
               that.deviceModel = res.deviceModel;
             },
             fail: function(err) {
-              formatAppLog("log", "at pages/setting/setting.vue:41", err);
+              formatAppLog("log", "at pages/map/map.vue:45", err);
             }
           });
-          formatAppLog("log", "at pages/setting/setting.vue:44", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + this.latitude);
-          formatAppLog("log", "at pages/setting/setting.vue:45", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + this.longitude);
-          formatAppLog("log", "at pages/setting/setting.vue:46", "\u8BBE\u5907ID\uFF1A" + this.deviceId);
-          formatAppLog("log", "at pages/setting/setting.vue:47", "\u8BBE\u5907\u578B\u53F7\uFF1A" + this.deviceModel);
+          formatAppLog("log", "at pages/map/map.vue:48", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + this.latitude);
+          formatAppLog("log", "at pages/map/map.vue:49", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + this.longitude);
+          formatAppLog("log", "at pages/map/map.vue:50", "\u8BBE\u5907ID\uFF1A" + this.deviceId);
+          formatAppLog("log", "at pages/map/map.vue:51", "\u8BBE\u5907\u578B\u53F7\uFF1A" + this.deviceModel);
           Rt.callFunction({
             name: "insertPositionData",
             data: {
@@ -2392,28 +2489,183 @@ if (uni.restoreGlobal) {
               createTime: time.now()
             }
           }).then((res) => {
-            formatAppLog("log", "at pages/setting/setting.vue:59", res);
+            formatAppLog("log", "at pages/map/map.vue:63", res);
           }).catch((err) => {
-            formatAppLog("log", "at pages/setting/setting.vue:61", err);
+            formatAppLog("log", "at pages/map/map.vue:65", err);
           });
         }
+      },
+      getRemoteInfo() {
+        Rt.callFunction({
+          name: "readPositionData",
+          data: {
+            deviceID: "67e983c1e2139685"
+          }
+        }).then((res) => {
+          var data = res.result.data;
+          formatAppLog("log", "at pages/map/map.vue:79", res);
+          const latitude = data[0].latitude;
+          const longitude = data[0].longitude;
+          formatAppLog("log", "at pages/map/map.vue:82", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + latitude);
+          formatAppLog("log", "at pages/map/map.vue:83", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + longitude);
+          uni.openLocation({
+            latitude,
+            longitude,
+            success: function(res2) {
+              formatAppLog("log", "at pages/map/map.vue:88", res2);
+            },
+            fail: function(err) {
+              formatAppLog("log", "at pages/map/map.vue:91", err);
+            }
+          });
+        }).catch((err) => {
+          formatAppLog("log", "at pages/map/map.vue:95", err);
+        });
       }
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
-      vue.createElementVNode("view", { class: "uni-form-item uni-column" }, [
-        vue.createElementVNode("view", { class: "title" }, [
-          vue.createTextVNode("\u540E\u53F0\u5B9A\u4F4D "),
+      vue.createElementVNode("view", { class: "uni-list" }, [
+        vue.createElementVNode("view", { class: "uni-list-cell" }, [
+          vue.createElementVNode("view", { class: "uni-list-cell-db" }, "\u540E\u53F0\u5B9A\u4F4D"),
           vue.createElementVNode("switch", {
+            type: "switch",
             onChange: _cache[0] || (_cache[0] = (...args) => $options.switchChange && $options.switchChange(...args))
           }, null, 32)
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
+        vue.createElementVNode("button", {
+          type: "primary",
+          onClick: _cache[1] || (_cache[1] = ($event) => $options.getRemoteInfo())
+        }, "\u67E5\u770B\u4F4D\u7F6E")
+      ])
+    ]);
+  }
+  var PagesMapMap = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "D:/Coding/Positioning/pages/map/map.vue"]]);
+  const _sfc_main$3 = {
+    data() {
+      return {};
+    },
+    onLoad() {
+    },
+    methods: {}
+  };
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", null, [
+      vue.createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
+        vue.createElementVNode("view", { class: "uni-btn-v" }, [
+          vue.createElementVNode("navigator", {
+            url: "/pages/setting/register/register",
+            "hover-class": "navigator-hover"
+          }, [
+            vue.createElementVNode("button", { type: "default" }, "\u6CE8\u518C\u7528\u6237")
+          ]),
+          vue.createElementVNode("navigator", {
+            url: "/pages/setting/confirm/confirm",
+            "hover-class": "navigator-hover"
+          }, [
+            vue.createElementVNode("button", { type: "default" }, "\u67E5\u770B\u7528\u6237")
+          ])
         ])
       ])
     ]);
   }
-  var PagesSettingSetting = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/Coding/Positioning/pages/setting/setting.vue"]]);
+  var PagesSettingSetting = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/Coding/Positioning/pages/setting/setting.vue"]]);
+  const _sfc_main$2 = {};
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("div");
+  }
+  var PagesSettingConfirmConfirm = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/Coding/Positioning/pages/setting/confirm/confirm.vue"]]);
+  const _sfc_main$1 = {
+    data() {
+      return {};
+    },
+    onLoad() {
+    },
+    methods: {
+      inputname: function(e) {
+        this.name = e.detail.value;
+      },
+      inputmobile: function(e) {
+        this.mobile = e.detail.value;
+      },
+      getUserInfo() {
+        const that = this;
+        uni.getSystemInfo({
+          success: function(res) {
+            that.deviceId = res.deviceId;
+          },
+          fail: function(err) {
+            formatAppLog("log", "at pages/setting/register/register.vue:36", err);
+          }
+        });
+        formatAppLog("log", "at pages/setting/register/register.vue:39", "\u7528\u6237\u6635\u79F0\uFF1A" + this.name);
+        formatAppLog("log", "at pages/setting/register/register.vue:40", "\u624B\u673A\u53F7\uFF1A" + this.mobile);
+        formatAppLog("log", "at pages/setting/register/register.vue:41", "\u8BBE\u5907ID\uFF1A" + this.deviceId);
+        Rt.callFunction({
+          name: "insertUserData",
+          data: {
+            userName: this.name,
+            mobile: this.mobile,
+            deviceID: this.deviceId
+          }
+        }).then((res) => {
+          uni.hideLoading();
+          uni.showModal({
+            content: "\u6CE8\u518C\u6210\u529F",
+            showCancel: false
+          });
+          formatAppLog("log", "at pages/setting/register/register.vue:56", res);
+        }).catch((err) => {
+          uni.hideLoading();
+          uni.showModal({
+            content: "\u6CE8\u518C\u5931\u8D25",
+            showCancel: false
+          });
+          formatAppLog("log", "at pages/setting/register/register.vue:63", err);
+        });
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createElementVNode("view", { class: "form" }, [
+        vue.createElementVNode("view", { class: "inputWrapper" }, [
+          vue.createElementVNode("input", {
+            class: "input",
+            type: "text",
+            onInput: _cache[0] || (_cache[0] = (...args) => $options.inputname && $options.inputname(...args)),
+            value: "",
+            placeholder: "\u8BF7\u8F93\u5165\u6635\u79F0"
+          }, null, 32)
+        ]),
+        vue.createElementVNode("view", { class: "inputWrapper" }, [
+          vue.createElementVNode("input", {
+            class: "input",
+            type: "number",
+            onInput: _cache[1] || (_cache[1] = (...args) => $options.inputmobile && $options.inputmobile(...args)),
+            maxlength: "11",
+            value: "",
+            placeholder: "\u8BF7\u8F93\u5165\u624B\u673A\u53F7"
+          }, null, 32)
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
+        vue.createElementVNode("button", {
+          type: "primary",
+          onClick: _cache[2] || (_cache[2] = ($event) => $options.getUserInfo())
+        }, "\u6CE8\u518C")
+      ])
+    ], 64);
+  }
+  var PagesSettingRegisterRegister = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/Coding/Positioning/pages/setting/register/register.vue"]]);
+  __definePage("pages/index/index", PagesIndexIndex);
+  __definePage("pages/map/map", PagesMapMap);
   __definePage("pages/setting/setting", PagesSettingSetting);
+  __definePage("pages/setting/confirm/confirm", PagesSettingConfirmConfirm);
+  __definePage("pages/setting/register/register", PagesSettingRegisterRegister);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");

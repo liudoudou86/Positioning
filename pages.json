@@ -17,6 +17,18 @@
 			"style": {
 				"navigationBarTitleText": "用户设置"
 			}
+		},
+		{
+			"path": "pages/setting/confirm/confirm",
+			"style": {
+				"navigationBarTitleText": "查看用户"
+			}
+		},
+		{
+			"path": "pages/setting/register/register",
+			"style": {
+				"navigationBarTitleText": "注册用户"
+			}
 		}
 	],
 	"globalStyle": {

@@ -75,7 +75,7 @@
                 }
             }
         },
-        "nvueCompiler" : "weex"
+        "nvueCompiler" : "uni-app"
     },
     /* 快应用特有相关 */
     "quickapp" : {},

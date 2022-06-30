@@ -110,7 +110,7 @@
         }
       }
     },
-    "nvueCompiler": "weex",
+    "nvueCompiler": "uni-app",
     "uniStatistics": {
       "enable": false
     },

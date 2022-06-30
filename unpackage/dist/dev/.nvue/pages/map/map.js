@@ -17,8 +17,60 @@ var __spreadValues = (a2, b2) => {
   return a2;
 };
 var __spreadProps = (a2, b2) => __defProps(a2, __getOwnPropDescs(b2));
-import { _ as _export_sfc, f as formatAppLog } from "../../plugin-vue_export-helper.js";
-import { openBlock, createElementBlock, createElementVNode, normalizeStyle } from "vue";
+import { resolveComponent, openBlock, createElementBlock, createElementVNode, createVNode, withCtx, createTextVNode } from "vue";
+Object.freeze({});
+Object.freeze([]);
+const objectToString = Object.prototype.toString;
+const toTypeString = (value) => objectToString.call(value);
+const toRawType = (value) => {
+  return toTypeString(value).slice(8, -1);
+};
+function isDebugMode() {
+  return typeof __channelId__ === "string" && __channelId__;
+}
+function jsonStringifyReplacer(k2, p2) {
+  switch (toRawType(p2)) {
+    case "Function":
+      return "function() { [native code] }";
+    default:
+      return p2;
+  }
+}
+function normalizeLog(type, filename, args) {
+  if (isDebugMode()) {
+    args.push(filename.replace("at ", "uni-app:///"));
+    return console[type].apply(console, args);
+  }
+  const msgs = args.map(function(v2) {
+    const type2 = toTypeString(v2).toLowerCase();
+    if (["[object object]", "[object array]", "[object module]"].indexOf(type2) !== -1) {
+      try {
+        v2 = "---BEGIN:JSON---" + JSON.stringify(v2, jsonStringifyReplacer) + "---END:JSON---";
+      } catch (e) {
+        v2 = type2;
+      }
+    } else {
+      if (v2 === null) {
+        v2 = "---NULL---";
+      } else if (v2 === void 0) {
+        v2 = "---UNDEFINED---";
+      } else {
+        const vType = toRawType(v2).toUpperCase();
+        if (vType === "NUMBER" || vType === "BOOLEAN") {
+          v2 = "---BEGIN:" + vType + "---" + v2 + "---END:" + vType + "---";
+        } else {
+          v2 = String(v2);
+        }
+      }
+    }
+    return v2;
+  });
+  return msgs.join("---COMMA---") + " " + filename;
+}
+function formatAppLog(type, filename, ...args) {
+  const res = normalizeLog(type, filename, args);
+  res && console[type](res);
+}
 const isArray = Array.isArray;
 const isObject = (val) => val !== null && typeof val === "object";
 const defaultDelimiters = ["{", "}"];
@@ -514,7 +566,7 @@ function u(e) {
 function l(e) {
   return e && typeof e == "string" ? JSON.parse(e) : e;
 }
-const h = true, d = "app", f = l('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 50340,\n    "initialLaunchType": "local",\n    "servePort": 50341,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), p = l('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
+const h = true, d = "app", f = l('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 49968,\n    "initialLaunchType": "local",\n    "servePort": 49969\n}\n'), p = l('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
 let m = "";
 try {
   m = "__UNI__BA53D3D";
@@ -2252,54 +2304,111 @@ let Ut = new class {
   }
 })();
 var Rt = Ut;
-var _style_0 = { "content": { "": { "flex": 1 } } };
+const now = function() {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  var timer = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+  return timer;
+};
+var time = {
+  now
+};
+var _style_0 = { "content": { "": { "flex": 1 } }, "uni-list-cell": { "": { "paddingTop": 0, "paddingRight": "30rpx", "paddingBottom": 0, "paddingLeft": "30rpx" } }, "uni-padding-wrap": { "": { "marginTop": "30rpx", "marginBottom": "30rpx", "marginLeft": "30rpx", "marginRight": "30rpx" } } };
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
 const _sfc_main = {
   data() {
-    return {
-      latitude: 39.909,
-      longitude: 116.39742
-    };
+    return {};
   },
   onLoad() {
-    const _this = this;
-    uni.getSystemInfo({
-      success: (res) => {
-        _this.mapHeight = res.screenHeight - res.statusBarHeight;
-        _this.mapHeight = _this.mapHeight;
-      }
-    });
   },
   methods: {
+    switchChange: function(e) {
+      var switchcontrol = e.detail.value;
+      if (switchcontrol == true) {
+        const that = this;
+        uni.getLocation({
+          type: "gcj02",
+          isHighAccuracy: true,
+          success: function(res) {
+            that.latitude = res.latitude;
+            that.longitude = res.longitude;
+          },
+          fail: function(err) {
+            formatAppLog("log", "at pages/map/map.nvue:36", err);
+          }
+        });
+        uni.getSystemInfo({
+          success: function(res) {
+            that.deviceId = res.deviceId;
+            that.deviceModel = res.deviceModel;
+          },
+          fail: function(err) {
+            formatAppLog("log", "at pages/map/map.nvue:45", err);
+          }
+        });
+        formatAppLog("log", "at pages/map/map.nvue:48", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + this.latitude);
+        formatAppLog("log", "at pages/map/map.nvue:49", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + this.longitude);
+        formatAppLog("log", "at pages/map/map.nvue:50", "\u8BBE\u5907ID\uFF1A" + this.deviceId);
+        formatAppLog("log", "at pages/map/map.nvue:51", "\u8BBE\u5907\u578B\u53F7\uFF1A" + this.deviceModel);
+        Rt.callFunction({
+          name: "insertPositionData",
+          data: {
+            deviceID: this.deviceId,
+            deviceName: this.deviceModel,
+            latitude: this.latitude,
+            longitude: this.longitude,
+            createTime: time.now()
+          }
+        }).then((res) => {
+          formatAppLog("log", "at pages/map/map.nvue:63", res);
+        }).catch((err) => {
+          formatAppLog("log", "at pages/map/map.nvue:65", err);
+        });
+      }
+    },
     getRemoteInfo() {
       Rt.callFunction({
         name: "readPositionData",
         data: {
-          deviceID: "80703833cbfcc1f9"
+          deviceID: "67e983c1e2139685"
         }
       }).then((res) => {
         var data = res.result.data;
-        formatAppLog("log", "at pages/map/map.nvue:38", data);
+        formatAppLog("log", "at pages/map/map.nvue:79", res);
         const latitude = data[0].latitude;
         const longitude = data[0].longitude;
-        formatAppLog("log", "at pages/map/map.nvue:41", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + latitude);
-        formatAppLog("log", "at pages/map/map.nvue:42", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + longitude);
+        formatAppLog("log", "at pages/map/map.nvue:82", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + latitude);
+        formatAppLog("log", "at pages/map/map.nvue:83", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + longitude);
         uni.openLocation({
           latitude,
           longitude,
           success: function(res2) {
-            formatAppLog("log", "at pages/map/map.nvue:47", res2);
+            formatAppLog("log", "at pages/map/map.nvue:88", res2);
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/map/map.nvue:50", err);
+            formatAppLog("log", "at pages/map/map.nvue:91", err);
           }
         });
       }).catch((err) => {
-        formatAppLog("log", "at pages/map/map.nvue:54", err);
+        formatAppLog("log", "at pages/map/map.nvue:95", err);
       });
     }
   }
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_switch = resolveComponent("switch");
+  const _component_button = resolveComponent("button");
   return openBlock(), createElementBlock("scroll-view", {
     scrollY: true,
     showScrollbar: true,
@@ -2308,13 +2417,28 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     style: { flexDirection: "column" }
   }, [
     createElementVNode("view", { class: "content" }, [
-      createElementVNode("map", {
-        scale: 18,
-        onTap: _cache[0] || (_cache[0] = ($event) => $options.getRemoteInfo()),
-        style: normalizeStyle([{ "width": "100%" }, { height: _ctx.mapHeight + "px" }]),
-        longitude: $data.longitude,
-        latitude: $data.latitude
-      }, null, 44, ["longitude", "latitude"])
+      createElementVNode("view", { class: "uni-list" }, [
+        createElementVNode("view", { class: "uni-list-cell" }, [
+          createElementVNode("view", { class: "uni-list-cell-db" }, [
+            createElementVNode("u-text", null, "\u540E\u53F0\u5B9A\u4F4D")
+          ]),
+          createVNode(_component_switch, {
+            type: "switch",
+            onChange: $options.switchChange
+          }, null, 8, ["onChange"])
+        ])
+      ]),
+      createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
+        createVNode(_component_button, {
+          type: "primary",
+          onClick: _cache[0] || (_cache[0] = ($event) => $options.getRemoteInfo())
+        }, {
+          default: withCtx(() => [
+            createTextVNode("\u67E5\u770B\u4F4D\u7F6E")
+          ]),
+          _: 1
+        })
+      ])
     ])
   ]);
 }

@@ -8,5 +8,12 @@
 // 数据库查询有最大返回条数限制，详见：https://uniapp.dcloud.net.cn/uniCloud/cf-database?id=limit
 // 详细JQL语法，请参考 https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=jsquery
 
-// 下面示例查询uni-id-users表的所有数据
-db.collection('info').where('deviceID == "80703833cbfcc1f9"').orderBy('createTime').limit(1).get();
+// 查询模拟器数据
+db.collection('info').where({
+	deviceID: '67e983c1e2139685'
+}).limit(1).get();
+
+// 清空数据库表数据
+db.collection('info').where({
+	latitude: ""
+}).remove()

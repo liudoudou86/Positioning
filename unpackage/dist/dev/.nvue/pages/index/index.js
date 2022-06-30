@@ -1,4 +1,4 @@
-import { _ as _export_sfc, f as formatAppLog } from "../../plugin-vue_export-helper.js";
+import { _ as _export_sfc, f as formatAppLog, R as Rt, t as time } from "../../plugin-vue_export-helper.js";
 import { resolveComponent, openBlock, createElementBlock, createElementVNode, normalizeStyle, createVNode, withCtx, createTextVNode } from "vue";
 var _style_0 = { "content": { "": { "flex": 1 } }, "uni-padding-wrap": { "": { "marginTop": "30rpx", "marginBottom": "30rpx", "marginLeft": "30rpx", "marginRight": "30rpx" } } };
 const _sfc_main = {
@@ -28,7 +28,7 @@ const _sfc_main = {
         success: function(res) {
           that.latitude = res.latitude;
           that.longitude = res.longitude;
-          formatAppLog("log", "at pages/index/index.nvue:42", res);
+          formatAppLog("log", "at pages/index/index.nvue:44", res);
           that.markers = [{
             id: 0,
             latitude: res.latitude,
@@ -43,8 +43,35 @@ const _sfc_main = {
           }];
         },
         fail: function(err) {
-          formatAppLog("log", "at pages/index/index.nvue:59", err);
+          formatAppLog("log", "at pages/index/index.nvue:61", err);
         }
+      });
+      uni.getSystemInfo({
+        success: function(res) {
+          that.deviceId = res.deviceId;
+          that.deviceModel = res.deviceModel;
+        },
+        fail: function(err) {
+          formatAppLog("log", "at pages/index/index.nvue:70", err);
+        }
+      });
+      formatAppLog("log", "at pages/index/index.nvue:73", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + this.latitude);
+      formatAppLog("log", "at pages/index/index.nvue:74", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + this.longitude);
+      formatAppLog("log", "at pages/index/index.nvue:75", "\u8BBE\u5907ID\uFF1A" + this.deviceId);
+      formatAppLog("log", "at pages/index/index.nvue:76", "\u8BBE\u5907\u578B\u53F7\uFF1A" + this.deviceModel);
+      Rt.callFunction({
+        name: "insertPositionData",
+        data: {
+          deviceID: this.deviceId,
+          deviceName: this.deviceModel,
+          latitude: this.latitude,
+          longitude: this.longitude,
+          createTime: time.now()
+        }
+      }).then((res) => {
+        formatAppLog("log", "at pages/index/index.nvue:88", res);
+      }).catch((err) => {
+        formatAppLog("log", "at pages/index/index.nvue:90", err);
       });
     }
   }
