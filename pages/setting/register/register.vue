@@ -38,14 +38,14 @@
 				});
 				console.log("用户昵称：" + this.name);
 				console.log("手机号：" + this.mobile);
-				console.log("设备ID：" + this.deviceId);
+				console.log("设备ID：" + that.deviceId);
 				// 调用云函数向云数据库插入数据
 				uniCloud.callFunction({
 					name: "insertUserData",
 					data: {
 						userName: this.name,
 						mobile: this.mobile,
-						deviceID: this.deviceId
+						deviceID: that.deviceId
 					}
 				}).then((res) => {
 					uni.hideLoading()

@@ -1,0 +1,7 @@
+{
+  "name": "readUserData",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
