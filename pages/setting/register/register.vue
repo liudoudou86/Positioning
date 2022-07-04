@@ -6,9 +6,9 @@
 		<view class="inputWrapper">
 			<input class="input" type="number" @input="inputmobile" maxlength="11" value="" placeholder="请输入手机号"/>
 		</view>
-	</view>
-	<view class="uni-padding-wrap uni-common-mt">
-	    <button type="primary" @click="getUserInfo()" >注册</button>
+		<view class="uni-padding-wrap uni-common-mt">
+		    <button type="primary" @click="getUserInfo()" >注册</button>
+		</view>
 	</view>
 </template>
 
@@ -39,29 +39,39 @@
 				console.log("用户昵称：" + this.name);
 				console.log("手机号：" + this.mobile);
 				console.log("设备ID：" + that.deviceId);
-				// 调用云函数向云数据库插入数据
-				uniCloud.callFunction({
-					name: "insertUserData",
-					data: {
-						userName: this.name,
-						mobile: this.mobile,
-						deviceID: that.deviceId
-					}
-				}).then((res) => {
-					uni.hideLoading()
+				// var mobileNumber = this.mobile.toString().length;
+				// console.log("手机号长度: " + mobileNumber);
+				if (this.name == null || this.name == "" || this.mobile == null || this.mobile == "") {
+					uni.hideLoading();
 					uni.showModal({
-						content: "注册成功",
+						content: "不能为空",
 						showCancel: false
-					})
-					console.log(res)
-				}).catch((err) =>{
-					uni.hideLoading()
-					uni.showModal({
-						content: "注册失败",
-						showCancel: false
-					})
-					console.log(err)
-				});
+					});
+				} else {
+					// 调用云函数向云数据库插入数据
+					uniCloud.callFunction({
+						name: "insertUserData",
+						data: {
+							userName: this.name,
+							mobile: this.mobile,
+							deviceID: that.deviceId
+						}
+					}).then((res) => {
+						uni.hideLoading()
+						uni.showModal({
+							content: "注册成功",
+							showCancel: false
+						})
+						console.log(res)
+					}).catch((err) =>{
+						uni.hideLoading()
+						uni.showModal({
+							content: "注册失败",
+							showCancel: false
+						})
+						console.log(err)
+					});
+				}
 			}
 		}
 	}
@@ -76,18 +86,20 @@
 	}
 	
 	.inputWrapper{
-		width: 100%;
-		height: 80upx;
-		background: white;
+		width: 200px;
+		height: 50px;
+		background: #C0C0C0;
 		border-radius: 20px;
-		box-sizing: border-box;
 		padding: 0 20px;
-		margin-top: 25px;
+	    margin-top: 30rpx;
+	    margin-bottom: 30rpx;
+		margin-left: 30rpx;
+		margin-right: 30rpx;
 	}
 	
 	.inputWrapper .input{
-		width: 100%;
-		height: 100%;
+		width: 200px;
+		height: 50px;
 		text-align: center;
 		font-size: 15px;
 	}

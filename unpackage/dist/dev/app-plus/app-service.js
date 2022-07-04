@@ -668,7 +668,7 @@ if (uni.restoreGlobal) {
   function h(e) {
     return e && typeof e == "string" ? JSON.parse(e) : e;
   }
-  const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 65081,\n    "initialLaunchType": "local",\n    "servePort": 65082\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
+  const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 60522,\n    "initialLaunchType": "local",\n    "servePort": 60523\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   let y = "";
   try {
     y = "__UNI__BA53D3D";
@@ -2554,53 +2554,59 @@ if (uni.restoreGlobal) {
         formatAppLog("log", "at pages/setting/register/register.vue:39", "\u7528\u6237\u6635\u79F0\uFF1A" + this.name);
         formatAppLog("log", "at pages/setting/register/register.vue:40", "\u624B\u673A\u53F7\uFF1A" + this.mobile);
         formatAppLog("log", "at pages/setting/register/register.vue:41", "\u8BBE\u5907ID\uFF1A" + that.deviceId);
-        tn.callFunction({
-          name: "insertUserData",
-          data: {
-            userName: this.name,
-            mobile: this.mobile,
-            deviceID: that.deviceId
-          }
-        }).then((res) => {
+        if (this.name == null || this.name == "" || this.mobile == null || this.mobile == "") {
           uni.hideLoading();
           uni.showModal({
-            content: "\u6CE8\u518C\u6210\u529F",
+            content: "\u4E0D\u80FD\u4E3A\u7A7A",
             showCancel: false
           });
-          formatAppLog("log", "at pages/setting/register/register.vue:56", res);
-        }).catch((err) => {
-          uni.hideLoading();
-          uni.showModal({
-            content: "\u6CE8\u518C\u5931\u8D25",
-            showCancel: false
+        } else {
+          tn.callFunction({
+            name: "insertUserData",
+            data: {
+              userName: this.name,
+              mobile: this.mobile,
+              deviceID: that.deviceId
+            }
+          }).then((res) => {
+            uni.hideLoading();
+            uni.showModal({
+              content: "\u6CE8\u518C\u6210\u529F",
+              showCancel: false
+            });
+            formatAppLog("log", "at pages/setting/register/register.vue:65", res);
+          }).catch((err) => {
+            uni.hideLoading();
+            uni.showModal({
+              content: "\u6CE8\u518C\u5931\u8D25",
+              showCancel: false
+            });
+            formatAppLog("log", "at pages/setting/register/register.vue:72", err);
           });
-          formatAppLog("log", "at pages/setting/register/register.vue:63", err);
-        });
+        }
       }
     }
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
-      vue.createElementVNode("view", { class: "form" }, [
-        vue.createElementVNode("view", { class: "inputWrapper" }, [
-          vue.createElementVNode("input", {
-            class: "input",
-            type: "text",
-            onInput: _cache[0] || (_cache[0] = (...args) => $options.inputname && $options.inputname(...args)),
-            value: "",
-            placeholder: "\u8BF7\u8F93\u5165\u6635\u79F0"
-          }, null, 32)
-        ]),
-        vue.createElementVNode("view", { class: "inputWrapper" }, [
-          vue.createElementVNode("input", {
-            class: "input",
-            type: "number",
-            onInput: _cache[1] || (_cache[1] = (...args) => $options.inputmobile && $options.inputmobile(...args)),
-            maxlength: "11",
-            value: "",
-            placeholder: "\u8BF7\u8F93\u5165\u624B\u673A\u53F7"
-          }, null, 32)
-        ])
+    return vue.openBlock(), vue.createElementBlock("view", { class: "form" }, [
+      vue.createElementVNode("view", { class: "inputWrapper" }, [
+        vue.createElementVNode("input", {
+          class: "input",
+          type: "text",
+          onInput: _cache[0] || (_cache[0] = (...args) => $options.inputname && $options.inputname(...args)),
+          value: "",
+          placeholder: "\u8BF7\u8F93\u5165\u6635\u79F0"
+        }, null, 32)
+      ]),
+      vue.createElementVNode("view", { class: "inputWrapper" }, [
+        vue.createElementVNode("input", {
+          class: "input",
+          type: "number",
+          onInput: _cache[1] || (_cache[1] = (...args) => $options.inputmobile && $options.inputmobile(...args)),
+          maxlength: "11",
+          value: "",
+          placeholder: "\u8BF7\u8F93\u5165\u624B\u673A\u53F7"
+        }, null, 32)
       ]),
       vue.createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
         vue.createElementVNode("button", {
@@ -2608,7 +2614,7 @@ if (uni.restoreGlobal) {
           onClick: _cache[2] || (_cache[2] = ($event) => $options.getUserInfo())
         }, "\u6CE8\u518C")
       ])
-    ], 64);
+    ]);
   }
   var PagesSettingRegisterRegister = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/Coding/Positioning/pages/setting/register/register.vue"]]);
   __definePage("pages/setting/confirm/confirm", PagesSettingConfirmConfirm);

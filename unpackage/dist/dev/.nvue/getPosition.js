@@ -633,7 +633,7 @@ function l(e) {
 function h(e) {
   return e && typeof e == "string" ? JSON.parse(e) : e;
 }
-const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 65081,\n    "initialLaunchType": "local",\n    "servePort": 65082\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
+const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 60522,\n    "initialLaunchType": "local",\n    "servePort": 60523\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
 let y = "";
 try {
   y = "__UNI__BA53D3D";
@@ -2504,7 +2504,78 @@ const now = function() {
   var timer = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
   return timer;
 };
-var time = {
-  now
+const getPosition = function() {
+  const that = this;
+  uni.getSystemInfo({
+    success: function(res) {
+      that.deviceId = res.deviceId;
+    },
+    fail: function(err) {
+      formatAppLog("log", "at common/getPosition.js:22", err);
+    }
+  });
+  formatAppLog("log", "at common/getPosition.js:25", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
+  tn.callFunction({
+    name: "readUserData",
+    data: {
+      deviceID: this.deviceId
+    }
+  }).then((res) => {
+    var data = res.result.data;
+    var readDeviceID = data[0].deviceID;
+    formatAppLog("log", "at common/getPosition.js:35", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
+    if (this.deviceId == readDeviceID) {
+      const that2 = this;
+      uni.getLocation({
+        type: "gcj02",
+        isHighAccuracy: true,
+        success: function(res2) {
+          that2.latitude = res2.latitude;
+          that2.longitude = res2.longitude;
+          formatAppLog("log", "at common/getPosition.js:44", res2);
+          that2.markers = [{
+            id: 0,
+            latitude: res2.latitude,
+            longitude: res2.longitude,
+            iconPath: "/static/location.png"
+          }], that2.circles = [{
+            latitude: res2.latitude,
+            longitude: res2.longitude,
+            color: "#C0C0C0",
+            radius: 30,
+            strokeWidth: 5
+          }];
+        },
+        fail: function(err) {
+          formatAppLog("log", "at common/getPosition.js:61", err);
+        }
+      });
+      formatAppLog("log", "at common/getPosition.js:64", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + this.latitude);
+      formatAppLog("log", "at common/getPosition.js:65", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + this.longitude);
+      tn.callFunction({
+        name: "insertPositionData",
+        data: {
+          deviceID: this.deviceId,
+          latitude: this.latitude,
+          longitude: this.longitude,
+          createTime: now()
+        }
+      }).then((res2) => {
+        formatAppLog("log", "at common/getPosition.js:76", res2);
+      }).catch((err) => {
+        formatAppLog("log", "at common/getPosition.js:78", err);
+      });
+    }
+  }).catch((err) => {
+    uni.hideLoading();
+    uni.showModal({
+      content: "\u8BF7\u5148\u6CE8\u518C",
+      showCancel: false
+    });
+    formatAppLog("log", "at common/getPosition.js:87", err);
+  });
 };
-export { time as a, formatAppLog as f, tn as t };
+var get = {
+  getPosition
+};
+export { formatAppLog as f, get as g, tn as t };

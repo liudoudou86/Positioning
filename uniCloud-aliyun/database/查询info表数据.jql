@@ -9,9 +9,12 @@
 // 详细JQL语法，请参考 https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=jsquery
 
 // 查询模拟器数据
-db.collection('user').where({
-	deviceID: '80703833cbfcc1f9'
-}).get();
+db.collection('info')
+	.where('deviceID == "fead8da92fcd20a3" && latitude != "" && latitude != null')
+	.orderBy('createTime','desc')
+	.limit(1).get();
 
 // 清空数据库表数据
-db.collection('user').remove()
+db.collection('info').where({
+	deviceID: '80703833cbfcc1f9'
+}).remove()
