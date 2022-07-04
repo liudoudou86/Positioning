@@ -10,7 +10,7 @@
 
 // 查询模拟器数据
 db.collection('info')
-	.where('deviceID == "fead8da92fcd20a3" && latitude != "" && latitude != null')
+	.where('deviceID == "80703833cbfcc1f9" && latitude != "" && latitude != null')
 	.orderBy('createTime','desc')
 	.limit(1).get();
 
