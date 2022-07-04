@@ -10,8 +10,8 @@ const now = function() {
 	var timer = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
 	return timer;
 }
-// 封装获取定位函数
-const getPosition = function() {
+// 封装位置函数
+const position = function() {
 	const that = this
 	// 获取本机设备ID
 	uni.getSystemInfo({
@@ -70,7 +70,7 @@ const getPosition = function() {
 					deviceID: this.deviceId,
 					latitude: this.latitude,
 					longitude: this.longitude,
-					createTime: now()
+					createTime: time.now()
 				}
 			}).then((res) => {
 				console.log(res)
@@ -87,8 +87,7 @@ const getPosition = function() {
 		console.log(err)
 	});
 }
-
 // 导出函数，getPosition是vue调用函数的接口
 export default{
-	getPosition
+	position
 }

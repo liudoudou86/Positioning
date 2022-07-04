@@ -76,7 +76,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
     }
   });
 
-  // ../../../Positioning/unpackage/dist/dev/.nvue/getPosition.js
+  // ../../../Positioning/unpackage/dist/dev/.nvue/uni-cloud.es.js
   var __defProp2 = Object.defineProperty;
   var __defProps = Object.defineProperties;
   var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
@@ -171,20 +171,20 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   var RE_TOKEN_NAMED_VALUE = /^(?:\w)+/;
   function parse(format, [startDelimiter, endDelimiter]) {
     const tokens = [];
-    let position = 0;
+    let position2 = 0;
     let text = "";
-    while (position < format.length) {
-      let char = format[position++];
+    while (position2 < format.length) {
+      let char = format[position2++];
       if (char === startDelimiter) {
         if (text) {
           tokens.push({ type: "text", value: text });
         }
         text = "";
         let sub = "";
-        char = format[position++];
+        char = format[position2++];
         while (char !== void 0 && char !== endDelimiter) {
           sub += char;
-          char = format[position++];
+          char = format[position2++];
         }
         const isClosed = char === endDelimiter;
         const type = RE_TOKEN_LIST_VALUE.test(sub) ? "list" : isClosed && RE_TOKEN_NAMED_VALUE.test(sub) ? "named" : "unknown";
@@ -717,7 +717,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   }
   var d = true;
   var f = "app";
-  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 60522,\n    "initialLaunchType": "local",\n    "servePort": 60523\n}\n');
+  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 51288,\n    "initialLaunchType": "local",\n    "servePort": 51289,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n');
   var p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   var y = "";
   try {
@@ -2675,18 +2675,21 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
     }
   })();
   var tn = en;
-  var now = function() {
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var hour = date.getHours();
-    var minute = date.getMinutes();
-    var second = date.getSeconds();
-    var timer2 = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
-    return timer2;
+
+  // ../../../Positioning/unpackage/dist/dev/.nvue/pages/map/map.js
+  var import_vue = __toESM(require_vue());
+
+  // ../../../Positioning/unpackage/dist/dev/.nvue/plugin-vue_export-helper.js
+  var _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
   };
-  var getPosition = function() {
+
+  // ../../../Positioning/unpackage/dist/dev/.nvue/pages/map/map.js
+  var position = function() {
     const that = this;
     uni.getSystemInfo({
       success: function(res) {
@@ -2740,7 +2743,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
             deviceID: this.deviceId,
             latitude: this.latitude,
             longitude: this.longitude,
-            createTime: now()
+            createTime: time.now()
           }
         }).then((res2) => {
           formatAppLog("log", "at common/getPosition.js:76", res2);
@@ -2758,22 +2761,8 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
     });
   };
   var get = {
-    getPosition
+    position
   };
-
-  // ../../../Positioning/unpackage/dist/dev/.nvue/pages/map/map.js
-  var import_vue = __toESM(require_vue());
-
-  // ../../../Positioning/unpackage/dist/dev/.nvue/plugin-vue_export-helper.js
-  var _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-
-  // ../../../Positioning/unpackage/dist/dev/.nvue/pages/map/map.js
   var _style_0 = { "form": { "": { "paddingTop": 0, "paddingRight": "100rpx", "paddingBottom": 0, "paddingLeft": "100rpx", "marginTop": 80 } }, "uni-list-cell-db": { "": { "marginTop": 10, "marginLeft": 15 } }, "uni-padding-wrap": { "": { "marginTop": "30rpx", "marginBottom": "30rpx", "marginLeft": "30rpx", "marginRight": "30rpx" } }, "inputWrapper": { "": { "width": 230, "height": 50, "backgroundColor": "#C0C0C0", "borderRadius": 20, "paddingTop": 0, "paddingRight": 20, "paddingBottom": 0, "paddingLeft": 20, "marginTop": "30rpx", "marginBottom": "10rpx", "marginLeft": "30rpx", "marginRight": "50rpx" } }, "input": { ".inputWrapper ": { "width": 200, "height": 50, "textAlign": "center", "fontSize": 15 } } };
   var _sfc_main = {
     data() {

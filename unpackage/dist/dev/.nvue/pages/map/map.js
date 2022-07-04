@@ -1,6 +1,80 @@
-import { g as get, f as formatAppLog, t as tn } from "../../getPosition.js";
+import { f as formatAppLog, t as tn } from "../../uni-cloud.es.js";
 import { resolveComponent, openBlock, createElementBlock, createElementVNode, createVNode, withCtx, createTextVNode } from "vue";
 import { _ as _export_sfc } from "../../plugin-vue_export-helper.js";
+const position = function() {
+  const that = this;
+  uni.getSystemInfo({
+    success: function(res) {
+      that.deviceId = res.deviceId;
+    },
+    fail: function(err) {
+      formatAppLog("log", "at common/getPosition.js:22", err);
+    }
+  });
+  formatAppLog("log", "at common/getPosition.js:25", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
+  tn.callFunction({
+    name: "readUserData",
+    data: {
+      deviceID: this.deviceId
+    }
+  }).then((res) => {
+    var data = res.result.data;
+    var readDeviceID = data[0].deviceID;
+    formatAppLog("log", "at common/getPosition.js:35", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
+    if (this.deviceId == readDeviceID) {
+      const that2 = this;
+      uni.getLocation({
+        type: "gcj02",
+        isHighAccuracy: true,
+        success: function(res2) {
+          that2.latitude = res2.latitude;
+          that2.longitude = res2.longitude;
+          formatAppLog("log", "at common/getPosition.js:44", res2);
+          that2.markers = [{
+            id: 0,
+            latitude: res2.latitude,
+            longitude: res2.longitude,
+            iconPath: "/static/location.png"
+          }], that2.circles = [{
+            latitude: res2.latitude,
+            longitude: res2.longitude,
+            color: "#C0C0C0",
+            radius: 30,
+            strokeWidth: 5
+          }];
+        },
+        fail: function(err) {
+          formatAppLog("log", "at common/getPosition.js:61", err);
+        }
+      });
+      formatAppLog("log", "at common/getPosition.js:64", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + this.latitude);
+      formatAppLog("log", "at common/getPosition.js:65", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + this.longitude);
+      tn.callFunction({
+        name: "insertPositionData",
+        data: {
+          deviceID: this.deviceId,
+          latitude: this.latitude,
+          longitude: this.longitude,
+          createTime: time.now()
+        }
+      }).then((res2) => {
+        formatAppLog("log", "at common/getPosition.js:76", res2);
+      }).catch((err) => {
+        formatAppLog("log", "at common/getPosition.js:78", err);
+      });
+    }
+  }).catch((err) => {
+    uni.hideLoading();
+    uni.showModal({
+      content: "\u8BF7\u5148\u6CE8\u518C",
+      showCancel: false
+    });
+    formatAppLog("log", "at common/getPosition.js:87", err);
+  });
+};
+var get = {
+  position
+};
 var _style_0 = { "form": { "": { "paddingTop": 0, "paddingRight": "100rpx", "paddingBottom": 0, "paddingLeft": "100rpx", "marginTop": 80 } }, "uni-list-cell-db": { "": { "marginTop": 10, "marginLeft": 15 } }, "uni-padding-wrap": { "": { "marginTop": "30rpx", "marginBottom": "30rpx", "marginLeft": "30rpx", "marginRight": "30rpx" } }, "inputWrapper": { "": { "width": 230, "height": 50, "backgroundColor": "#C0C0C0", "borderRadius": 20, "paddingTop": 0, "paddingRight": 20, "paddingBottom": 0, "paddingLeft": 20, "marginTop": "30rpx", "marginBottom": "10rpx", "marginLeft": "30rpx", "marginRight": "50rpx" } }, "input": { ".inputWrapper ": { "width": 200, "height": 50, "textAlign": "center", "fontSize": 15 } } };
 const _sfc_main = {
   data() {
