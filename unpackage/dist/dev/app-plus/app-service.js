@@ -668,7 +668,7 @@ if (uni.restoreGlobal) {
   function h(e) {
     return e && typeof e == "string" ? JSON.parse(e) : e;
   }
-  const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 51288,\n    "initialLaunchType": "local",\n    "servePort": 51289,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
+  const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 51378,\n    "initialLaunchType": "local",\n    "servePort": 51379,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   let y = "";
   try {
     y = "__UNI__BA53D3D";
@@ -2554,35 +2554,53 @@ if (uni.restoreGlobal) {
         formatAppLog("log", "at pages/setting/register/register.vue:39", "\u7528\u6237\u6635\u79F0\uFF1A" + this.name);
         formatAppLog("log", "at pages/setting/register/register.vue:40", "\u624B\u673A\u53F7\uFF1A" + this.mobile);
         formatAppLog("log", "at pages/setting/register/register.vue:41", "\u8BBE\u5907ID\uFF1A" + that.deviceId);
-        if (this.name == null || this.name == "" || this.mobile == null || this.mobile == "") {
+        if (this.name == null || this.name == "") {
           uni.hideLoading();
           uni.showModal({
-            content: "\u4E0D\u80FD\u4E3A\u7A7A",
+            content: "\u6635\u79F0\u4E0D\u80FD\u4E3A\u7A7A",
             showCancel: false
           });
         } else {
-          tn.callFunction({
-            name: "insertUserData",
-            data: {
-              userName: this.name,
-              mobile: this.mobile,
-              deviceID: that.deviceId
+          if (this.mobile == null || this.mobile == "") {
+            uni.hideLoading();
+            uni.showModal({
+              content: "\u624B\u673A\u53F7\u4E0D\u80FD\u4E3A\u7A7A",
+              showCancel: false
+            });
+          } else {
+            var mobileNumber = this.mobile.toString().length;
+            formatAppLog("log", "at pages/setting/register/register.vue:57", "\u624B\u673A\u53F7\u957F\u5EA6: " + mobileNumber);
+            if (mobileNumber < 11) {
+              uni.hideLoading();
+              uni.showModal({
+                content: "\u624B\u673A\u53F7\u957F\u5EA6\u4E0D\u8DB311",
+                showCancel: false
+              });
+            } else {
+              tn.callFunction({
+                name: "insertUserData",
+                data: {
+                  userName: this.name,
+                  mobile: this.mobile,
+                  deviceID: that.deviceId
+                }
+              }).then((res) => {
+                uni.hideLoading();
+                uni.showModal({
+                  content: "\u6CE8\u518C\u6210\u529F",
+                  showCancel: false
+                });
+                formatAppLog("log", "at pages/setting/register/register.vue:79", res);
+              }).catch((err) => {
+                uni.hideLoading();
+                uni.showModal({
+                  content: "\u6CE8\u518C\u5931\u8D25",
+                  showCancel: false
+                });
+                formatAppLog("log", "at pages/setting/register/register.vue:86", err);
+              });
             }
-          }).then((res) => {
-            uni.hideLoading();
-            uni.showModal({
-              content: "\u6CE8\u518C\u6210\u529F",
-              showCancel: false
-            });
-            formatAppLog("log", "at pages/setting/register/register.vue:65", res);
-          }).catch((err) => {
-            uni.hideLoading();
-            uni.showModal({
-              content: "\u6CE8\u518C\u5931\u8D25",
-              showCancel: false
-            });
-            formatAppLog("log", "at pages/setting/register/register.vue:72", err);
-          });
+          }
         }
       }
     }

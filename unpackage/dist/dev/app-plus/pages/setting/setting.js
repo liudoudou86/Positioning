@@ -103,6 +103,20 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
                 })
               ]),
               _: 1
+            }),
+            (0, import_vue.createVNode)(_component_navigator, {
+              url: "/pages/setting/comfirm/comfirm",
+              "hover-class": "navigator-hover"
+            }, {
+              default: (0, import_vue.withCtx)(() => [
+                (0, import_vue.createVNode)(_component_button, { type: "default" }, {
+                  default: (0, import_vue.withCtx)(() => [
+                    (0, import_vue.createTextVNode)("\u67E5\u770B\u7528\u6237")
+                  ]),
+                  _: 1
+                })
+              ]),
+              _: 1
             })
           ])
         ])

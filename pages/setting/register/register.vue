@@ -39,38 +39,54 @@
 				console.log("用户昵称：" + this.name);
 				console.log("手机号：" + this.mobile);
 				console.log("设备ID：" + that.deviceId);
-				// var mobileNumber = this.mobile.toString().length;
-				// console.log("手机号长度: " + mobileNumber);
-				if (this.name == null || this.name == "" || this.mobile == null || this.mobile == "") {
+				if (this.name == null || this.name == "") {
 					uni.hideLoading();
 					uni.showModal({
-						content: "不能为空",
+						content: "昵称不能为空",
 						showCancel: false
 					});
 				} else {
-					// 调用云函数向云数据库插入数据
-					uniCloud.callFunction({
-						name: "insertUserData",
-						data: {
-							userName: this.name,
-							mobile: this.mobile,
-							deviceID: that.deviceId
+					if (this.mobile == null || this.mobile == "") {
+						uni.hideLoading();
+						uni.showModal({
+							content: "手机号不能为空",
+							showCancel: false
+						});
+					} else {
+						var mobileNumber = this.mobile.toString().length;
+						console.log("手机号长度: " + mobileNumber);
+						if (mobileNumber < 11) {
+							uni.hideLoading();
+							uni.showModal({
+								content: "手机号长度不足11",
+								showCancel: false
+							});
+						} else {
+							// 调用云函数向云数据库插入数据
+							uniCloud.callFunction({
+								name: "insertUserData",
+								data: {
+									userName: this.name,
+									mobile: this.mobile,
+									deviceID: that.deviceId
+								}
+							}).then((res) => {
+								uni.hideLoading()
+								uni.showModal({
+									content: "注册成功",
+									showCancel: false
+								})
+								console.log(res)
+							}).catch((err) =>{
+								uni.hideLoading()
+								uni.showModal({
+									content: "注册失败",
+									showCancel: false
+								})
+								console.log(err)
+							});
 						}
-					}).then((res) => {
-						uni.hideLoading()
-						uni.showModal({
-							content: "注册成功",
-							showCancel: false
-						})
-						console.log(res)
-					}).catch((err) =>{
-						uni.hideLoading()
-						uni.showModal({
-							content: "注册失败",
-							showCancel: false
-						})
-						console.log(err)
-					});
+					}
 				}
 			}
 		}
@@ -86,29 +102,29 @@
 	}
 	
 	.inputWrapper{
-		width: 200px;
+		width: 170px;
 		height: 50px;
 		background: #C0C0C0;
 		border-radius: 20px;
 		padding: 0 20px;
-	    margin-top: 30rpx;
-	    margin-bottom: 30rpx;
-		margin-left: 30rpx;
-		margin-right: 30rpx;
+	    margin-top: 50rpx;
+	    margin-bottom: 50rpx;
+		margin-left: 50rpx;
+		margin-right: 50rpx;
 	}
 	
 	.inputWrapper .input{
-		width: 200px;
+		width: 170px;
 		height: 50px;
 		text-align: center;
 		font-size: 15px;
 	}
 	
 	.uni-padding-wrap {
-	    margin-top: 30rpx;
-	    margin-bottom: 30rpx;
-		margin-left: 30rpx;
-		margin-right: 30rpx;
+	    margin-top: 50rpx;
+	    margin-bottom: 50rpx;
+		margin-left: 50rpx;
+		margin-right: 50rpx;
 	}
 
 </style>

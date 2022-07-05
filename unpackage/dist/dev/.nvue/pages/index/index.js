@@ -52,49 +52,50 @@ const _sfc_main = {
           deviceID: this.deviceId
         }
       }).then((res) => {
+        var thisdeviceID = this.deviceId;
         var data = res.result.data;
         var readDeviceID = data[0].deviceID;
-        formatAppLog("log", "at pages/index/index.nvue:58", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
-        if (this.deviceId == readDeviceID) {
-          const that2 = this;
+        formatAppLog("log", "at pages/index/index.nvue:59", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
+        if (thisdeviceID == readDeviceID) {
           uni.getLocation({
             type: "gcj02",
             isHighAccuracy: true,
             success: function(res2) {
-              that2.latitude = res2.latitude;
-              that2.longitude = res2.longitude;
-              formatAppLog("log", "at pages/index/index.nvue:67", res2);
-              that2.markers = [{
-                id: 0,
-                latitude: res2.latitude,
-                longitude: res2.longitude,
-                iconPath: "/static/location.png"
-              }], that2.circles = [{
-                latitude: res2.latitude,
-                longitude: res2.longitude,
-                color: "#C0C0C0",
-                radius: 30,
-                strokeWidth: 5
-              }];
+              that.latitude = res2.latitude;
+              that.longitude = res2.longitude;
+              formatAppLog("log", "at pages/index/index.nvue:67", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + that.latitude);
+              formatAppLog("log", "at pages/index/index.nvue:68", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + that.longitude);
+              if (that.latitude != null && that.longitude != null) {
+                tn.callFunction({
+                  name: "insertPositionData",
+                  data: {
+                    deviceID: thisdeviceID,
+                    latitude: that.latitude,
+                    longitude: that.longitude,
+                    createTime: time.now()
+                  }
+                }).then((res3) => {
+                  formatAppLog("log", "at pages/index/index.nvue:80", res3);
+                }).catch((err) => {
+                  formatAppLog("log", "at pages/index/index.nvue:82", err);
+                });
+                that.markers = [{
+                  id: 0,
+                  latitude: res2.latitude,
+                  longitude: res2.longitude,
+                  iconPath: "/static/location.png"
+                }], that.circles = [{
+                  latitude: res2.latitude,
+                  longitude: res2.longitude,
+                  color: "#C0C0C0",
+                  radius: 30,
+                  strokeWidth: 5
+                }];
+              }
             },
             fail: function(err) {
-              formatAppLog("log", "at pages/index/index.nvue:84", err);
+              formatAppLog("log", "at pages/index/index.nvue:101", err);
             }
-          });
-          formatAppLog("log", "at pages/index/index.nvue:87", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + this.latitude);
-          formatAppLog("log", "at pages/index/index.nvue:88", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + this.longitude);
-          tn.callFunction({
-            name: "insertPositionData",
-            data: {
-              deviceID: this.deviceId,
-              latitude: this.latitude,
-              longitude: this.longitude,
-              createTime: time.now()
-            }
-          }).then((res2) => {
-            formatAppLog("log", "at pages/index/index.nvue:99", res2);
-          }).catch((err) => {
-            formatAppLog("log", "at pages/index/index.nvue:101", err);
           });
         }
       }).catch((err) => {
@@ -103,7 +104,7 @@ const _sfc_main = {
           content: "\u8BF7\u5148\u6CE8\u518C",
           showCancel: false
         });
-        formatAppLog("log", "at pages/index/index.nvue:110", err);
+        formatAppLog("log", "at pages/index/index.nvue:111", err);
       });
     }
   }

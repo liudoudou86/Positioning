@@ -10,11 +10,9 @@
 
 // 查询模拟器数据
 db.collection('info')
-	.where('deviceID == "67e983c1e2139685" && latitude != "" && latitude != null')
+	.where('deviceID == "80703833cbfcc1f9" && (latitude in ["",null])')
 	.orderBy('createTime','desc')
-	.limit(1).get();
+	.limit(5).get();
 
 // 清空数据库表数据
-db.collection('info').where({
-	deviceID: '67e983c1e2139685'
-}).remove()
+db.collection('info').remove()

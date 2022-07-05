@@ -1,0 +1,7 @@
+{
+  "name": "clearPositionData",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

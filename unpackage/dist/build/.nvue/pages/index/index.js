@@ -1,6 +1,20 @@
-import { g as get } from "../../getPosition.js";
+import { f as formatAppLog, t as tn } from "../../uni-cloud.es.js";
 import { resolveComponent, openBlock, createElementBlock, createElementVNode, normalizeStyle, createVNode, withCtx, createTextVNode } from "vue";
 import { _ as _export_sfc } from "../../plugin-vue_export-helper.js";
+const now = function() {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  var timer = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+  return timer;
+};
+var time = {
+  now
+};
 var _style_0 = { "content": { "": { "flex": 1 } }, "uni-padding-wrap": { "": { "marginTop": "30rpx", "marginBottom": "30rpx", "marginLeft": "30rpx", "marginRight": "30rpx" } } };
 const _sfc_main = {
   data() {
@@ -22,7 +36,75 @@ const _sfc_main = {
   },
   methods: {
     getLocationInfo() {
-      get.getPosition();
+      const that = this;
+      uni.getSystemInfo({
+        success: function(res) {
+          that.deviceId = res.deviceId;
+        },
+        fail: function(err) {
+          formatAppLog("log", "at pages/index/index.nvue:45", err);
+        }
+      });
+      formatAppLog("log", "at pages/index/index.nvue:48", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
+      tn.callFunction({
+        name: "readUserData",
+        data: {
+          deviceID: this.deviceId
+        }
+      }).then((res) => {
+        var data = res.result.data;
+        var readDeviceID = data[0].deviceID;
+        formatAppLog("log", "at pages/index/index.nvue:58", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
+        if (this.deviceId == readDeviceID) {
+          const that2 = this;
+          uni.getLocation({
+            type: "gcj02",
+            isHighAccuracy: true,
+            success: function(res2) {
+              that2.latitude = res2.latitude;
+              that2.longitude = res2.longitude;
+              formatAppLog("log", "at pages/index/index.nvue:67", res2);
+              that2.markers = [{
+                id: 0,
+                latitude: res2.latitude,
+                longitude: res2.longitude,
+                iconPath: "/static/location.png"
+              }], that2.circles = [{
+                latitude: res2.latitude,
+                longitude: res2.longitude,
+                color: "#C0C0C0",
+                radius: 30,
+                strokeWidth: 5
+              }];
+            },
+            fail: function(err) {
+              formatAppLog("log", "at pages/index/index.nvue:84", err);
+            }
+          });
+          formatAppLog("log", "at pages/index/index.nvue:87", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + this.latitude);
+          formatAppLog("log", "at pages/index/index.nvue:88", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + this.longitude);
+          tn.callFunction({
+            name: "insertPositionData",
+            data: {
+              deviceID: this.deviceId,
+              latitude: this.latitude,
+              longitude: this.longitude,
+              createTime: time.now()
+            }
+          }).then((res2) => {
+            formatAppLog("log", "at pages/index/index.nvue:99", res2);
+          }).catch((err) => {
+            formatAppLog("log", "at pages/index/index.nvue:101", err);
+          });
+        }
+      }).catch((err) => {
+        uni.hideLoading();
+        uni.showModal({
+          content: "\u8BF7\u5148\u6CE8\u518C",
+          showCancel: false
+        });
+        formatAppLog("log", "at pages/index/index.nvue:110", err);
+      });
     }
   }
 };

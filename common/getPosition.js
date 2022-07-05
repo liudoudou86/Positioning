@@ -12,6 +12,7 @@ const now = function() {
 }
 // 封装位置函数
 const position = function() {
+	// 封装获取定位函数
 	const that = this
 	// 获取本机设备ID
 	uni.getSystemInfo({
@@ -30,52 +31,39 @@ const position = function() {
 			deviceID: this.deviceId,
 		}
 	}).then((res) => {
+		var thisdeviceID = this.deviceId;
 		var data = res.result.data;
 		var readDeviceID = data[0].deviceID;
 		console.log("读取设备ID：" + readDeviceID);
-		if (this.deviceId == readDeviceID) {
-			const that = this
+		if (thisdeviceID == readDeviceID) {
 			uni.getLocation({
 				type: 'gcj02', // gcj02为高德定位
 				isHighAccuracy: true, // 高精度定位
 				success: function(res) {
 					that.latitude = res.latitude
 					that.longitude = res.longitude
-					console.log(res)
-					//标记点
-					that.markers = [{
-						id: 0,
-						latitude: res.latitude,
-						longitude: res.longitude,
-						iconPath: '/static/location.png'
-					}],
-					that.circles = [{
-						latitude: res.latitude,
-						longitude: res.longitude,
-						color: "#C0C0C0", //描边的颜色
-						radius: 30, //半径
-						strokeWidth: 5 //描边的宽度
-					}]
+					console.log("当前纬度：" + that.latitude);
+					console.log("当前经度：" + that.longitude);
+					if (that.latitude != null && that.longitude != null) {
+						// 调用云函数向云数据库插入数据
+						uniCloud.callFunction({
+							name: "insertPositionData",
+							data: {
+								deviceID: thisdeviceID,
+								latitude: that.latitude,
+								longitude: that.longitude,
+								createTime: now()
+							}
+						}).then((res) => {
+							console.log(res)
+						}).catch((err) =>{
+							console.log(err)
+						});
+					}
 				},
 				fail: function(err) {
 					console.log(err)
 				}
-			});
-			console.log("当前纬度：" + this.latitude);
-			console.log("当前经度：" + this.longitude);
-			// 调用云函数向云数据库插入数据
-			uniCloud.callFunction({
-				name: "insertPositionData",
-				data: {
-					deviceID: this.deviceId,
-					latitude: this.latitude,
-					longitude: this.longitude,
-					createTime: time.now()
-				}
-			}).then((res) => {
-				console.log(res)
-			}).catch((err) =>{
-				console.log(err)
 			});
 		}
 	}).catch((err) =>{

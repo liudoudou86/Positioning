@@ -1,17 +1,18 @@
 <template>
+	<view class="content">
+		<uni-list class="scrollview">
+			<uni-list-item :show-switch="true" title="后台定位" @switchChange="switchChange" />
+		</uni-list>
+	</view>
 	<view class="form">
-		<view class="uni-list">
-			<view class="uni-list-cell">
-				<view class="uni-list-cell-db">后台定位
-				<switch type="switch" @change="switchChange"/>
-				</view>
-				<view class="inputWrapper">
-					<input class="input" type="number" @input="inputmobile" maxlength="11" value="" placeholder="请输入手机号"/>
-				</view>
-				<view class="uni-padding-wrap uni-common-mt">
-					<button type="primary" @click="getRemoteInfo()">查看位置</button>
-				</view>
-			</view>
+		<view class="inputWrapper">
+			<input class="input" type="text" @input="inputname" value="" placeholder="请输入昵称"/>
+		</view>
+		<view class="uni-padding-wrap uni-common-mt">
+			<button type="primary" @click="getRemoteInfo()">查看位置</button>
+		</view>
+		<view class="uni-padding-wrap uni-common-mt">
+			<button type="primary" @click="clearPosition()">清空数据库</button>
 		</view>
 	</view>
 </template>
@@ -26,9 +27,9 @@
 		onLoad() {},
 		methods: {
 			switchChange: function (e) {
-				var switchcontrol = e.detail.value
+				var switchcontrol = e.value
 				if (switchcontrol == true) { // 创建定时器
-					timer = setInterval(get.getPosition, 50000);
+					timer = setInterval(get.position, 10000);
 					console.log("启动循环,循环ID: " + timer);
 					return timer // 传出结果
 				} else {
@@ -36,13 +37,13 @@
 					clearInterval(timer);
 				}
 			},
-			// 读取输入的手机号
-			inputmobile: function(e) {
-				this.mobile = e.detail.value
+			// 读取输入的昵称
+			inputname: function(e) {
+				this.name = e.detail.value
 			},
-			// 获取云数据库数据
+			// 获取云数据库位置信息
 			getRemoteInfo() {
-				if (this.name == null || this.name == "" || this.mobile == null || this.mobile == "") {
+				if (this.name == null || this.name == "") {
 					uni.hideLoading()
 					uni.showModal({
 						content: "不能为空",
@@ -53,11 +54,11 @@
 					uniCloud.callFunction({
 						name: "readUserData",
 						data: {
-							mobile: this.mobile,
+							userName: this.name,
 						}
 					}).then((res) => {
-						var data = res.result.data;
-						this.deviceID = data[0].deviceID;
+						var deviceData = res.result.data;
+						this.deviceID = deviceData[0].deviceID;
 						// 调用云函数向云数据库读取数据
 						uniCloud.callFunction({
 							name: "readPositionData",
@@ -65,10 +66,10 @@
 								deviceID: this.deviceID
 							}
 						}).then((res) => {
-							var data = res.result.data;
+							var positionData = res.result.data;
 							console.log(res);
-							const latitude = data[0].latitude;
-							const longitude = data[0].longitude;
+							const latitude = positionData[0].latitude;
+							const longitude = positionData[0].longitude;
 							console.log("当前纬度：" + latitude);
 							console.log("当前经度：" + longitude);
 							uni.openLocation({
@@ -87,12 +88,70 @@
 					}).catch((err) => {
 						uni.hideLoading()
 						uni.showModal({
-							content: "无此手机号",
+							content: "无此用户",
 							showCancel: false
 						})
 						console.log(err);
 					});	
 				}
+			},
+			// 清空云数据库位置信息
+			clearPosition() {
+				if (this.name == null || this.name == "") {
+					uni.hideLoading()
+					uni.showModal({
+						content: "不能为空",
+						showCancel: false
+					})
+				} else {
+					// 调用云函数查询设备ID
+					uniCloud.callFunction({
+						name: "readUserData",
+						data: {
+							userName: this.name,
+						}
+					}).then((res) => {
+						var deviceData = res.result.data;
+						this.deviceID = deviceData[0].deviceID;
+						// 调用云函数向云数据库读取数据
+						uniCloud.callFunction({
+							name: "clearPositionData",
+							data: {
+								deviceID: this.deviceID
+							}
+						}).then((res) => {
+							console.log(res)
+							if (res.result.deleted == "0") {
+								console.log(res.deleted);
+								uni.hideLoading()
+								uni.showModal({
+									content: "无清除数据",
+									showCancel: false
+								})
+							} else {
+								uni.hideLoading()
+								uni.showModal({
+									content: "清除成功",
+									showCancel: false
+								})
+							}
+						}).catch((err) => {
+							uni.hideLoading()
+							uni.showModal({
+								content: "清除失败",
+								showCancel: false
+							})
+							console.log(err)
+						});
+					}).catch((err) => {
+						uni.hideLoading()
+						uni.showModal({
+							content: "无此用户",
+							showCancel: false
+						})
+						console.log(err);
+					});	
+				}	
 			}
 		}
 	}
@@ -100,21 +159,18 @@
 
 <style>
 	
+	.content {
+	    flex: 1;
+	}
+	
+	.scrollview {
+		flex: 1;
+	}
+	
 	.form{
 		padding: 0 100upx;
-		margin-top: 80px;
-	}
-	
-	.uni-list-cell-db {
-		margin-top: 10px;
-		margin-left: 15px;
-	}
-	
-	.uni-padding-wrap {
-	    margin-top: 30rpx;
-	    margin-bottom: 30rpx;
-		margin-left: 30rpx;
-		margin-right: 30rpx;
+		margin-top: 100px;
+		margin-bottom: 100px;
 	}
 
 	.inputWrapper{
@@ -124,9 +180,9 @@
 		border-radius: 20px;
 		padding: 0 20px;
 	    margin-top: 30rpx;
-	    margin-bottom: 10rpx;
+	    margin-bottom: 30rpx;
 		margin-left: 30rpx;
-		margin-right: 50rpx;
+		margin-right: 30rpx;
 	}
 	
 	.inputWrapper .input{
@@ -134,6 +190,13 @@
 		height: 50px;
 		text-align: center;
 		font-size: 15px;
+	}
+	
+	.uni-padding-wrap {
+	    margin-top: 30rpx;
+	    margin-bottom: 30rpx;
+		margin-left: 30rpx;
+		margin-right: 30rpx;
 	}
 
 </style>
