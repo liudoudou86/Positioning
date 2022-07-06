@@ -717,7 +717,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   }
   var d = true;
   var f = "app";
-  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 51378,\n    "initialLaunchType": "local",\n    "servePort": 51379,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n');
+  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 63988,\n    "initialLaunchType": "local",\n    "servePort": 63990\n}\n');
   var p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   var y = "";
   try {

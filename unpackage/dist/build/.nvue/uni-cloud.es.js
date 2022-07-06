@@ -17,6 +17,7 @@ var __spreadValues = (a2, b2) => {
   return a2;
 };
 var __spreadProps = (a2, b2) => __defProps(a2, __getOwnPropDescs(b2));
+const isString = (val) => typeof val === "string";
 const objectToString = Object.prototype.toString;
 const toTypeString = (value) => objectToString.call(value);
 const toRawType = (value) => {
@@ -2402,4 +2403,4 @@ let en = new class {
   }
 })();
 var tn = en;
-export { formatAppLog as f, tn as t };
+export { formatAppLog as f, isString as i, tn as t };

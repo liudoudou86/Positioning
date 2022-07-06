@@ -5,7 +5,7 @@
 				<navigator url="/pages/setting/register/register" hover-class="navigator-hover">
 					<button type="default">注册用户</button>
 				</navigator>
-				<navigator url="/pages/setting/comfirm/comfirm" hover-class="navigator-hover">
+				<navigator url="/pages/setting/confirm/confirm" hover-class="navigator-hover">
 					<button type="default">查看用户</button>
 				</navigator>
 			</view>

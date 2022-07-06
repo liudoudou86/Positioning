@@ -45,20 +45,8 @@ if (typeof uni !== "undefined" && uni && uni.requireGlobal) {
 if (uni.restoreGlobal) {
   uni.restoreGlobal(Vue, weex, plus, setTimeout, clearTimeout, setInterval, clearInterval);
 }
-(function(vue, shared) {
+(function(shared, vue) {
   "use strict";
-  var _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-  const _sfc_main$2 = {};
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("div");
-  }
-  var PagesSettingConfirmConfirm = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/Coding/Positioning/pages/setting/confirm/confirm.vue"]]);
   function isDebugMode() {
     return typeof __channelId__ === "string" && __channelId__;
   }
@@ -668,7 +656,7 @@ if (uni.restoreGlobal) {
   function h(e) {
     return e && typeof e == "string" ? JSON.parse(e) : e;
   }
-  const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 51378,\n    "initialLaunchType": "local",\n    "servePort": 51379,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
+  const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 63988,\n    "initialLaunchType": "local",\n    "servePort": 63990\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   let y = "";
   try {
     y = "__UNI__BA53D3D";
@@ -2528,6 +2516,811 @@ if (uni.restoreGlobal) {
     }
   })();
   var tn = en;
+  var _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$7 = {
+    name: "uniTh",
+    options: {
+      virtualHost: true
+    },
+    components: {},
+    emits: ["sort-change", "filter-change"],
+    props: {
+      width: {
+        type: [String, Number],
+        default: ""
+      },
+      align: {
+        type: String,
+        default: "left"
+      },
+      rowspan: {
+        type: [Number, String],
+        default: 1
+      },
+      colspan: {
+        type: [Number, String],
+        default: 1
+      },
+      sortable: {
+        type: Boolean,
+        default: false
+      },
+      filterType: {
+        type: String,
+        default: ""
+      },
+      filterData: {
+        type: Array,
+        default() {
+          return [];
+        }
+      }
+    },
+    data() {
+      return {
+        border: false,
+        ascending: false,
+        descending: false
+      };
+    },
+    computed: {
+      customWidth() {
+        if (typeof this.width === "number") {
+          return this.width;
+        } else if (typeof this.width === "string") {
+          let regexHaveUnitPx = new RegExp(/^[1-9][0-9]*px$/g);
+          let regexHaveUnitRpx = new RegExp(/^[1-9][0-9]*rpx$/g);
+          let regexHaveNotUnit = new RegExp(/^[1-9][0-9]*$/g);
+          if (this.width.match(regexHaveUnitPx) !== null) {
+            return this.width.replace("px", "");
+          } else if (this.width.match(regexHaveUnitRpx) !== null) {
+            let numberRpx = Number(this.width.replace("rpx", ""));
+            let widthCoe = uni.getSystemInfoSync().screenWidth / 750;
+            return Math.round(numberRpx * widthCoe);
+          } else if (this.width.match(regexHaveNotUnit) !== null) {
+            return this.width;
+          } else {
+            return "";
+          }
+        } else {
+          return "";
+        }
+      },
+      contentAlign() {
+        let align = "left";
+        switch (this.align) {
+          case "left":
+            align = "flex-start";
+            break;
+          case "center":
+            align = "center";
+            break;
+          case "right":
+            align = "flex-end";
+            break;
+        }
+        return align;
+      }
+    },
+    created() {
+      this.root = this.getTable("uniTable");
+      this.rootTr = this.getTable("uniTr");
+      this.rootTr.minWidthUpdate(this.customWidth ? this.customWidth : 140);
+      this.border = this.root.border;
+      this.root.thChildren.push(this);
+    },
+    methods: {
+      sort() {
+        if (!this.sortable)
+          return;
+        this.clearOther();
+        if (!this.ascending && !this.descending) {
+          this.ascending = true;
+          this.$emit("sort-change", { order: "ascending" });
+          return;
+        }
+        if (this.ascending && !this.descending) {
+          this.ascending = false;
+          this.descending = true;
+          this.$emit("sort-change", { order: "descending" });
+          return;
+        }
+        if (!this.ascending && this.descending) {
+          this.ascending = false;
+          this.descending = false;
+          this.$emit("sort-change", { order: null });
+        }
+      },
+      ascendingFn() {
+        this.clearOther();
+        this.ascending = !this.ascending;
+        this.descending = false;
+        this.$emit("sort-change", { order: this.ascending ? "ascending" : null });
+      },
+      descendingFn() {
+        this.clearOther();
+        this.descending = !this.descending;
+        this.ascending = false;
+        this.$emit("sort-change", { order: this.descending ? "descending" : null });
+      },
+      clearOther() {
+        this.root.thChildren.map((item) => {
+          if (item !== this) {
+            item.ascending = false;
+            item.descending = false;
+          }
+          return item;
+        });
+      },
+      ondropdown(e) {
+        this.$emit("filter-change", e);
+      },
+      getTable(name) {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== name) {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      }
+    }
+  };
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: vue.normalizeClass(["uni-table-th", { "table--border": $data.border }]),
+      style: vue.normalizeStyle({ width: $options.customWidth + "px", "text-align": $props.align })
+    }, [
+      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+    ], 6);
+  }
+  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-511e81f9"], ["__file", "D:/Coding/Positioning/uni_modules/uni-table/components/uni-th/uni-th.vue"]]);
+  function resolveEasycom(component, easycom) {
+    return shared.isString(component) ? easycom : component;
+  }
+  const _sfc_main$6 = {
+    name: "TableCheckbox",
+    emits: ["checkboxSelected"],
+    props: {
+      indeterminate: {
+        type: Boolean,
+        default: false
+      },
+      checked: {
+        type: [Boolean, String],
+        default: false
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      index: {
+        type: Number,
+        default: -1
+      },
+      cellData: {
+        type: Object,
+        default() {
+          return {};
+        }
+      }
+    },
+    watch: {
+      checked(newVal) {
+        if (typeof this.checked === "boolean") {
+          this.isChecked = newVal;
+        } else {
+          this.isChecked = true;
+        }
+      },
+      indeterminate(newVal) {
+        this.isIndeterminate = newVal;
+      }
+    },
+    data() {
+      return {
+        isChecked: false,
+        isDisabled: false,
+        isIndeterminate: false
+      };
+    },
+    created() {
+      if (typeof this.checked === "boolean") {
+        this.isChecked = this.checked;
+      }
+      this.isDisabled = this.disabled;
+    },
+    methods: {
+      selected() {
+        if (this.isDisabled)
+          return;
+        this.isIndeterminate = false;
+        this.isChecked = !this.isChecked;
+        this.$emit("checkboxSelected", {
+          checked: this.isChecked,
+          data: this.cellData
+        });
+      }
+    }
+  };
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "uni-table-checkbox",
+      onClick: _cache[0] || (_cache[0] = (...args) => $options.selected && $options.selected(...args))
+    }, [
+      !$props.indeterminate ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: vue.normalizeClass(["checkbox__inner", { "is-checked": $data.isChecked, "is-disable": $data.isDisabled }])
+      }, [
+        vue.createElementVNode("view", { class: "checkbox__inner-icon" })
+      ], 2)) : (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "checkbox__inner checkbox--indeterminate"
+      }, [
+        vue.createElementVNode("view", { class: "checkbox__inner-icon" })
+      ]))
+    ]);
+  }
+  var tableCheckbox = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-68100fa0"], ["__file", "D:/Coding/Positioning/uni_modules/uni-table/components/uni-tr/table-checkbox.vue"]]);
+  const _sfc_main$5 = {
+    name: "uniTr",
+    components: { tableCheckbox },
+    props: {
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      keyValue: {
+        type: [String, Number],
+        default: ""
+      }
+    },
+    options: {
+      virtualHost: true
+    },
+    data() {
+      return {
+        value: false,
+        border: false,
+        selection: false,
+        widthThArr: [],
+        ishead: true,
+        checked: false,
+        indeterminate: false
+      };
+    },
+    created() {
+      this.root = this.getTable();
+      this.head = this.getTable("uniThead");
+      if (this.head) {
+        this.ishead = false;
+        this.head.init(this);
+      }
+      this.border = this.root.border;
+      this.selection = this.root.type;
+      this.root.trChildren.push(this);
+      const rowData = this.root.data.find((v2) => v2[this.root.rowKey] === this.keyValue);
+      if (rowData) {
+        this.rowData = rowData;
+      }
+      this.root.isNodata();
+    },
+    mounted() {
+      if (this.widthThArr.length > 0) {
+        const selectionWidth = this.selection === "selection" ? 50 : 0;
+        this.root.minWidth = this.widthThArr.reduce((a2, b2) => Number(a2) + Number(b2)) + selectionWidth;
+      }
+    },
+    unmounted() {
+      const index = this.root.trChildren.findIndex((i2) => i2 === this);
+      this.root.trChildren.splice(index, 1);
+      this.root.isNodata();
+    },
+    methods: {
+      minWidthUpdate(width) {
+        this.widthThArr.push(width);
+      },
+      checkboxSelected(e) {
+        let rootData = this.root.data.find((v2) => v2[this.root.rowKey] === this.keyValue);
+        this.checked = e.checked;
+        this.root.check(rootData || this, e.checked, rootData ? this.keyValue : null);
+      },
+      change(e) {
+        this.root.trChildren.forEach((item) => {
+          if (item === this) {
+            this.root.check(this, e.detail.value.length > 0 ? true : false);
+          }
+        });
+      },
+      getTable(name = "uniTable") {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== name) {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      }
+    }
+  };
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_table_checkbox = vue.resolveComponent("table-checkbox");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-table-tr" }, [
+      $data.selection === "selection" ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: vue.normalizeClass(["checkbox", { "tr-table--border": $data.border }])
+      }, [
+        vue.createVNode(_component_table_checkbox, {
+          checked: $data.checked,
+          indeterminate: $data.indeterminate,
+          disabled: $props.disabled,
+          onCheckboxSelected: $options.checkboxSelected
+        }, null, 8, ["checked", "indeterminate", "disabled", "onCheckboxSelected"])
+      ], 2)) : vue.createCommentVNode("v-if", true),
+      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+    ]);
+  }
+  var __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-c2c83a8e"], ["__file", "D:/Coding/Positioning/uni_modules/uni-table/components/uni-tr/uni-tr.vue"]]);
+  const _sfc_main$4 = {
+    name: "uniTd",
+    options: {
+      virtualHost: true
+    },
+    props: {
+      width: {
+        type: [String, Number],
+        default: ""
+      },
+      align: {
+        type: String,
+        default: "left"
+      },
+      rowspan: {
+        type: [Number, String],
+        default: 1
+      },
+      colspan: {
+        type: [Number, String],
+        default: 1
+      }
+    },
+    data() {
+      return {
+        border: false
+      };
+    },
+    created() {
+      this.root = this.getTable();
+      this.border = this.root.border;
+    },
+    methods: {
+      getTable() {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== "uniTable") {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      }
+    }
+  };
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+      vue.createCommentVNode(` :class="{'table--border':border}"  `),
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass(["uni-table-td", { "table--border": $data.border }]),
+        style: vue.normalizeStyle({ width: $props.width + "px", "text-align": $props.align })
+      }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+      ], 6)
+    ], 2112);
+  }
+  var __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-321f8e79"], ["__file", "D:/Coding/Positioning/uni_modules/uni-table/components/uni-td/uni-td.vue"]]);
+  const _sfc_main$3 = {
+    name: "uniTable",
+    options: {
+      virtualHost: true
+    },
+    emits: ["selection-change"],
+    props: {
+      data: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      border: {
+        type: Boolean,
+        default: false
+      },
+      stripe: {
+        type: Boolean,
+        default: false
+      },
+      type: {
+        type: String,
+        default: ""
+      },
+      emptyText: {
+        type: String,
+        default: "\u6CA1\u6709\u66F4\u591A\u6570\u636E"
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      },
+      rowKey: {
+        type: String,
+        default: ""
+      }
+    },
+    data() {
+      return {
+        noData: true,
+        minWidth: 0,
+        multiTableHeads: []
+      };
+    },
+    watch: {
+      loading(val) {
+      },
+      data(newVal) {
+        this.theadChildren;
+        if (this.theadChildren) {
+          this.theadChildren.rowspan;
+        }
+        this.noData = false;
+      }
+    },
+    created() {
+      this.trChildren = [];
+      this.thChildren = [];
+      this.theadChildren = null;
+      this.backData = [];
+      this.backIndexData = [];
+    },
+    methods: {
+      isNodata() {
+        this.theadChildren;
+        let rowspan = 1;
+        if (this.theadChildren) {
+          rowspan = this.theadChildren.rowspan;
+        }
+        this.noData = this.trChildren.length - rowspan <= 0;
+      },
+      selectionAll() {
+        let startIndex = 1;
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        } else {
+          startIndex = theadChildren.rowspan - 1;
+        }
+        let isHaveData = this.data && this.data.length.length > 0;
+        theadChildren.checked = true;
+        theadChildren.indeterminate = false;
+        this.trChildren.forEach((item, index) => {
+          if (!item.disabled) {
+            item.checked = true;
+            if (isHaveData && item.keyValue) {
+              const row = this.data.find((v2) => v2[this.rowKey] === item.keyValue);
+              if (!this.backData.find((v2) => v2[this.rowKey] === row[this.rowKey])) {
+                this.backData.push(row);
+              }
+            }
+            if (index > startIndex - 1 && this.backIndexData.indexOf(index - startIndex) === -1) {
+              this.backIndexData.push(index - startIndex);
+            }
+          }
+        });
+        this.$emit("selection-change", {
+          detail: {
+            value: this.backData,
+            index: this.backIndexData
+          }
+        });
+      },
+      toggleRowSelection(row, selected) {
+        row = [].concat(row);
+        this.trChildren.forEach((item, index) => {
+          const select = row.findIndex((v2) => {
+            if (typeof v2 === "number") {
+              return v2 === index - 1;
+            } else {
+              return v2[this.rowKey] === item.keyValue;
+            }
+          });
+          let ischeck = item.checked;
+          if (select !== -1) {
+            if (typeof selected === "boolean") {
+              item.checked = selected;
+            } else {
+              item.checked = !item.checked;
+            }
+            if (ischeck !== item.checked) {
+              this.check(item.rowData || item, item.checked, item.rowData ? item.keyValue : null, true);
+            }
+          }
+        });
+        this.$emit("selection-change", {
+          detail: {
+            value: this.backData,
+            index: this.backIndexData
+          }
+        });
+      },
+      clearSelection() {
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        }
+        theadChildren.checked = false;
+        theadChildren.indeterminate = false;
+        this.trChildren.forEach((item) => {
+          item.checked = false;
+        });
+        this.backData = [];
+        this.backIndexData = [];
+        this.$emit("selection-change", {
+          detail: {
+            value: [],
+            index: []
+          }
+        });
+      },
+      toggleAllSelection() {
+        let list = [];
+        let startIndex = 1;
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        } else {
+          startIndex = theadChildren.rowspan - 1;
+        }
+        this.trChildren.forEach((item, index) => {
+          if (!item.disabled) {
+            if (index > startIndex - 1) {
+              list.push(index - startIndex);
+            }
+          }
+        });
+        this.toggleRowSelection(list);
+      },
+      check(child, check, keyValue, emit) {
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        }
+        let childDomIndex = this.trChildren.findIndex((item, index) => child === item);
+        if (childDomIndex < 0) {
+          childDomIndex = this.data.findIndex((v2) => v2[this.rowKey] === keyValue) + 1;
+        }
+        this.trChildren.filter((v2) => !v2.disabled && v2.keyValue).length;
+        if (childDomIndex === 0) {
+          check ? this.selectionAll() : this.clearSelection();
+          return;
+        }
+        if (check) {
+          if (keyValue) {
+            this.backData.push(child);
+          }
+          this.backIndexData.push(childDomIndex - 1);
+        } else {
+          const index = this.backData.findIndex((v2) => v2[this.rowKey] === keyValue);
+          const idx = this.backIndexData.findIndex((item) => item === childDomIndex - 1);
+          if (keyValue) {
+            this.backData.splice(index, 1);
+          }
+          this.backIndexData.splice(idx, 1);
+        }
+        const domCheckAll = this.trChildren.find((item, index) => index > 0 && !item.checked && !item.disabled);
+        if (!domCheckAll) {
+          theadChildren.indeterminate = false;
+          theadChildren.checked = true;
+        } else {
+          theadChildren.indeterminate = true;
+          theadChildren.checked = false;
+        }
+        if (this.backIndexData.length === 0) {
+          theadChildren.indeterminate = false;
+        }
+        if (!emit) {
+          this.$emit("selection-change", {
+            detail: {
+              value: this.backData,
+              index: this.backIndexData
+            }
+          });
+        }
+      }
+    }
+  };
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: vue.normalizeClass(["uni-table-scroll", { "table--border": $props.border, "border-none": !$data.noData }])
+    }, [
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass(["uni-table", { "table--stripe": $props.stripe }]),
+        style: vue.normalizeStyle({ "min-width": $data.minWidth + "px" })
+      }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
+        $data.noData ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "uni-table-loading"
+        }, [
+          vue.createElementVNode("view", {
+            class: vue.normalizeClass(["uni-table-text", { "empty-border": $props.border }])
+          }, vue.toDisplayString($props.emptyText), 3)
+        ])) : vue.createCommentVNode("v-if", true),
+        $props.loading ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          class: vue.normalizeClass(["uni-table-mask", { "empty-border": $props.border }])
+        }, [
+          vue.createElementVNode("div", { class: "uni-table--loader" })
+        ], 2)) : vue.createCommentVNode("v-if", true)
+      ], 6)
+    ], 2);
+  }
+  var __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-6cd49106"], ["__file", "D:/Coding/Positioning/uni_modules/uni-table/components/uni-table/uni-table.vue"]]);
+  const _sfc_main$2 = {
+    data() {
+      return {
+        tableData: [],
+        loading: false
+      };
+    },
+    onLoad() {
+      this.getUserList();
+    },
+    methods: {
+      getUserList() {
+        this.loading = true;
+        const that = this;
+        uni.getSystemInfo({
+          success: function(res) {
+            that.deviceId = res.deviceId;
+          },
+          fail: function(err) {
+            formatAppLog("log", "at pages/setting/confirm/confirm.vue:49", err);
+          }
+        });
+        formatAppLog("log", "at pages/setting/confirm/confirm.vue:52", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
+        tn.callFunction({
+          name: "readUserData",
+          data: {
+            deviceID: this.deviceId
+          }
+        }).then((res) => {
+          formatAppLog("log", "at pages/setting/confirm/confirm.vue:60", res);
+          this.tableData = res.result.data;
+          this.loading = false;
+        }).catch((err) => {
+          formatAppLog("log", "at pages/setting/confirm/confirm.vue:64", err);
+        });
+      },
+      deleteUserList() {
+        const that = this;
+        uni.getSystemInfo({
+          success: function(res) {
+            that.deviceId = res.deviceId;
+          },
+          fail: function(err) {
+            formatAppLog("log", "at pages/setting/confirm/confirm.vue:75", err);
+          }
+        });
+        formatAppLog("log", "at pages/setting/confirm/confirm.vue:78", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
+        tn.callFunction({
+          name: "clearUserData",
+          data: {
+            deviceID: this.deviceId
+          }
+        }).then((res) => {
+          formatAppLog("log", "at pages/setting/confirm/confirm.vue:86", res);
+        }).catch((err) => {
+          formatAppLog("log", "at pages/setting/confirm/confirm.vue:88", err);
+        });
+      }
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_th = resolveEasycom(vue.resolveDynamicComponent("uni-th"), __easycom_0);
+    const _component_uni_tr = resolveEasycom(vue.resolveDynamicComponent("uni-tr"), __easycom_1);
+    const _component_uni_td = resolveEasycom(vue.resolveDynamicComponent("uni-td"), __easycom_2);
+    const _component_uni_table = resolveEasycom(vue.resolveDynamicComponent("uni-table"), __easycom_3);
+    return vue.openBlock(), vue.createElementBlock("view", null, [
+      vue.createElementVNode("view", { class: "uni-container" }, [
+        vue.createVNode(_component_uni_table, {
+          ref: "table",
+          loading: $data.loading,
+          border: "",
+          stripe: "",
+          emptyText: "\u6682\u65E0\u66F4\u591A\u6570\u636E"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createVNode(_component_uni_tr, null, {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_th, {
+                  width: "100",
+                  align: "center"
+                }, {
+                  default: vue.withCtx(() => [
+                    vue.createTextVNode("\u6635\u79F0")
+                  ]),
+                  _: 1
+                }),
+                vue.createVNode(_component_uni_th, {
+                  width: "100",
+                  align: "center"
+                }, {
+                  default: vue.withCtx(() => [
+                    vue.createTextVNode("\u624B\u673A\u53F7")
+                  ]),
+                  _: 1
+                }),
+                vue.createVNode(_component_uni_th, {
+                  width: "90",
+                  align: "center"
+                }, {
+                  default: vue.withCtx(() => [
+                    vue.createTextVNode("\u8BBE\u7F6E")
+                  ]),
+                  _: 1
+                })
+              ]),
+              _: 1
+            }),
+            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.tableData, (item, index) => {
+              return vue.openBlock(), vue.createBlock(_component_uni_tr, { key: index }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_td, { align: "center" }, {
+                    default: vue.withCtx(() => [
+                      vue.createElementVNode("view", { class: "name" }, vue.toDisplayString(item.userName), 1)
+                    ]),
+                    _: 2
+                  }, 1024),
+                  vue.createVNode(_component_uni_td, { align: "center" }, {
+                    default: vue.withCtx(() => [
+                      vue.createElementVNode("view", { class: "mobile" }, vue.toDisplayString(item.mobile), 1)
+                    ]),
+                    _: 2
+                  }, 1024),
+                  vue.createVNode(_component_uni_td, null, {
+                    default: vue.withCtx(() => [
+                      vue.createElementVNode("view", { class: "uni-group" }, [
+                        vue.createElementVNode("button", {
+                          class: "uni-button",
+                          size: "mini",
+                          type: "warn",
+                          onClick: _cache[0] || (_cache[0] = ($event) => $options.deleteUserList())
+                        }, "\u5220\u9664")
+                      ])
+                    ]),
+                    _: 1
+                  })
+                ]),
+                _: 2
+              }, 1024);
+            }), 128))
+          ]),
+          _: 1
+        }, 8, ["loading"])
+      ])
+    ]);
+  }
+  var PagesSettingConfirmConfirm = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/Coding/Positioning/pages/setting/confirm/confirm.vue"]]);
   const _sfc_main$1 = {
     data() {
       return {};
@@ -2663,4 +3456,4 @@ if (uni.restoreGlobal) {
   __app__._component.render = () => {
   };
   __app__.mount("#app");
-})(Vue, uni.VueShared);
+})(uni.VueShared, Vue);

@@ -34,6 +34,20 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
               })
             ]),
             _: 1
+          }),
+          createVNode(_component_navigator, {
+            url: "/pages/setting/comfirm/comfirm",
+            "hover-class": "navigator-hover"
+          }, {
+            default: withCtx(() => [
+              createVNode(_component_button, { type: "default" }, {
+                default: withCtx(() => [
+                  createTextVNode("\u67E5\u770B\u7528\u6237")
+                ]),
+                _: 1
+              })
+            ]),
+            _: 1
           })
         ])
       ])

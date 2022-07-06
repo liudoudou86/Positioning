@@ -105,7 +105,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
               _: 1
             }),
             (0, import_vue.createVNode)(_component_navigator, {
-              url: "/pages/setting/comfirm/comfirm",
+              url: "/pages/setting/confirm/confirm",
               "hover-class": "navigator-hover"
             }, {
               default: (0, import_vue.withCtx)(() => [
