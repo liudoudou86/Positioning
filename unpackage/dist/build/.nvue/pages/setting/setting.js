@@ -36,7 +36,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
             _: 1
           }),
           createVNode(_component_navigator, {
-            url: "/pages/setting/comfirm/comfirm",
+            url: "/pages/setting/confirm/confirm",
             "hover-class": "navigator-hover"
           }, {
             default: withCtx(() => [

@@ -718,7 +718,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   }
   var d = true;
   var f = "app";
-  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 63988,\n    "initialLaunchType": "local",\n    "servePort": 63990\n}\n');
+  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 53812,\n    "initialLaunchType": "local",\n    "servePort": 53813\n}\n');
   var p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   var y = "";
   try {
@@ -4391,10 +4391,10 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
         that.deviceId = res.deviceId;
       },
       fail: function(err) {
-        formatAppLog("log", "at common/getPosition.js:23", err);
+        formatAppLog("log", "at common/getPosition.js:22", err);
       }
     });
-    formatAppLog("log", "at common/getPosition.js:26", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
+    formatAppLog("log", "at common/getPosition.js:25", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
     tn.callFunction({
       name: "readUserData",
       data: {
@@ -4404,7 +4404,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
       var thisdeviceID = this.deviceId;
       var data = res.result.data;
       var readDeviceID = data[0].deviceID;
-      formatAppLog("log", "at common/getPosition.js:37", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
+      formatAppLog("log", "at common/getPosition.js:36", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
       if (thisdeviceID == readDeviceID) {
         uni.getLocation({
           type: "gcj02",
@@ -4412,8 +4412,8 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
           success: function(res2) {
             that.latitude = res2.latitude;
             that.longitude = res2.longitude;
-            formatAppLog("log", "at common/getPosition.js:45", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + that.latitude);
-            formatAppLog("log", "at common/getPosition.js:46", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + that.longitude);
+            formatAppLog("log", "at common/getPosition.js:44", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + that.latitude);
+            formatAppLog("log", "at common/getPosition.js:45", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + that.longitude);
             if (that.latitude != null && that.longitude != null) {
               tn.callFunction({
                 name: "insertPositionData",
@@ -4424,14 +4424,14 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
                   createTime: now()
                 }
               }).then((res3) => {
-                formatAppLog("log", "at common/getPosition.js:58", res3);
+                formatAppLog("log", "at common/getPosition.js:57", res3);
               }).catch((err) => {
-                formatAppLog("log", "at common/getPosition.js:60", err);
+                formatAppLog("log", "at common/getPosition.js:59", err);
               });
             }
           },
           fail: function(err) {
-            formatAppLog("log", "at common/getPosition.js:65", err);
+            formatAppLog("log", "at common/getPosition.js:64", err);
           }
         });
       }
@@ -4441,7 +4441,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
         content: "\u8BF7\u5148\u6CE8\u518C",
         showCancel: false
       });
-      formatAppLog("log", "at common/getPosition.js:75", err);
+      formatAppLog("log", "at common/getPosition.js:74", err);
     });
   };
   var get = {

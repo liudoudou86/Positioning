@@ -12,7 +12,6 @@ const now = function() {
 }
 // 封装位置函数
 const position = function() {
-	// 封装获取定位函数
 	const that = this
 	// 获取本机设备ID
 	uni.getSystemInfo({
