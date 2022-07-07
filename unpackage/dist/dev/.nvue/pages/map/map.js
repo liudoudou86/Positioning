@@ -1904,7 +1904,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         default: withCtx(() => [
           createVNode(_component_uni_list_item, {
             "show-switch": true,
-            title: "\u540E\u53F0\u5B9A\u4F4D",
+            title: "\u6301\u7EED\u5B9A\u4F4D",
             onSwitchChange: $options.switchChange
           }, null, 8, ["onSwitchChange"])
         ]),

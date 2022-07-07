@@ -83,9 +83,19 @@
 						deviceID: this.deviceId,
 					}
 				}).then((res) => {
-					console.log(res);
+					uni.hideLoading()
+					uni.showModal({
+						content: "删除成功",
+						showCancel: false
+					});
+					console.log(res)
 				}).catch((err) => {
-					console.log(err);
+					uni.hideLoading()
+					uni.showModal({
+						content: "删除失败",
+						showCancel: false
+					});
+					console.log(err)
 				});
 			}
 		}

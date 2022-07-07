@@ -718,7 +718,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   }
   var d = true;
   var f = "app";
-  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 53812,\n    "initialLaunchType": "local",\n    "servePort": 53813\n}\n');
+  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 57300,\n    "initialLaunchType": "local",\n    "servePort": 57305,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n');
   var p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   var y = "";
   try {
@@ -4593,7 +4593,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
           default: (0, import_vue.withCtx)(() => [
             (0, import_vue.createVNode)(_component_uni_list_item, {
               "show-switch": true,
-              title: "\u540E\u53F0\u5B9A\u4F4D",
+              title: "\u6301\u7EED\u5B9A\u4F4D",
               onSwitchChange: $options.switchChange
             }, null, 8, ["onSwitchChange"])
           ]),

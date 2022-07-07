@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<uni-list class="scrollview">
-			<uni-list-item :show-switch="true" title="后台定位" @switchChange="switchChange" />
+			<uni-list-item :show-switch="true" title="持续定位" @switchChange="switchChange" />
 		</uni-list>
 	</view>
 	<view class="form">
