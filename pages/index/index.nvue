@@ -57,7 +57,7 @@
 					var data = res.result.data;
 					var readDeviceID = data[0].deviceID;
 					console.log("读取设备ID：" + readDeviceID);
-					if (thisdeviceID == readDeviceID) {
+					if (thisdeviceID === readDeviceID) {
 						uni.getLocation({
 							type: 'gcj02', // gcj02为高德定位
 							isHighAccuracy: true, // 高精度定位
@@ -77,7 +77,7 @@
 											createTime: time.now()
 										}
 									}).then((res) => {
-										console.log(res)
+										// console.log(res)
 									}).catch((err) =>{
 										console.log(err)
 									});
@@ -108,7 +108,7 @@
 						content: "请先注册",
 						showCancel: false
 					})
-					console.log(err)
+					// console.log(err)
 				});
 			}
 		}

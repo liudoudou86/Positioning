@@ -39,14 +39,14 @@
 				console.log("用户昵称：" + this.name);
 				console.log("手机号：" + this.mobile);
 				console.log("设备ID：" + that.deviceId);
-				if (this.name == null || this.name == "") {
+				if (this.name === null || this.name === "") {
 					uni.hideLoading();
 					uni.showModal({
 						content: "昵称不能为空",
 						showCancel: false
 					});
 				} else {
-					if (this.mobile == null || this.mobile == "") {
+					if (this.mobile === null || this.mobile === "") {
 						uni.hideLoading();
 						uni.showModal({
 							content: "手机号不能为空",
@@ -76,14 +76,14 @@
 									content: "注册成功",
 									showCancel: false
 								})
-								console.log(res)
+								// console.log(res)
 							}).catch((err) =>{
 								uni.hideLoading()
 								uni.showModal({
 									content: "注册失败",
 									showCancel: false
 								})
-								console.log(err)
+								// console.log(err)
 							});
 						}
 					}

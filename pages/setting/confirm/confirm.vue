@@ -57,7 +57,7 @@
 						deviceID: this.deviceId,
 					}
 				}).then((res) => {
-					console.log(res);
+					// console.log(res);
 					this.tableData = res.result.data;
 					this.loading = false;
 				}).catch((err) => {
@@ -88,14 +88,14 @@
 						content: "删除成功",
 						showCancel: false
 					});
-					console.log(res)
+					// console.log(res)
 				}).catch((err) => {
 					uni.hideLoading()
 					uni.showModal({
 						content: "删除失败",
 						showCancel: false
 					});
-					console.log(err)
+					// console.log(err)
 				});
 			}
 		}

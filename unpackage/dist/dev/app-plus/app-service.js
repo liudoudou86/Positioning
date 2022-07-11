@@ -656,7 +656,7 @@ if (uni.restoreGlobal) {
   function h(e) {
     return e && typeof e == "string" ? JSON.parse(e) : e;
   }
-  const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 57300,\n    "initialLaunchType": "local",\n    "servePort": 57305,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
+  const d = true, f = "app", g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 62051,\n    "initialLaunchType": "local",\n    "servePort": 62052,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   let y = "";
   try {
     y = "__UNI__BA53D3D";
@@ -3204,7 +3204,6 @@ if (uni.restoreGlobal) {
             deviceID: this.deviceId
           }
         }).then((res) => {
-          formatAppLog("log", "at pages/setting/confirm/confirm.vue:60", res);
           this.tableData = res.result.data;
           this.loading = false;
         }).catch((err) => {
@@ -3233,14 +3232,12 @@ if (uni.restoreGlobal) {
             content: "\u5220\u9664\u6210\u529F",
             showCancel: false
           });
-          formatAppLog("log", "at pages/setting/confirm/confirm.vue:91", res);
         }).catch((err) => {
           uni.hideLoading();
           uni.showModal({
             content: "\u5220\u9664\u5931\u8D25",
             showCancel: false
           });
-          formatAppLog("log", "at pages/setting/confirm/confirm.vue:98", err);
         });
       }
     }
@@ -3357,14 +3354,14 @@ if (uni.restoreGlobal) {
         formatAppLog("log", "at pages/setting/register/register.vue:39", "\u7528\u6237\u6635\u79F0\uFF1A" + this.name);
         formatAppLog("log", "at pages/setting/register/register.vue:40", "\u624B\u673A\u53F7\uFF1A" + this.mobile);
         formatAppLog("log", "at pages/setting/register/register.vue:41", "\u8BBE\u5907ID\uFF1A" + that.deviceId);
-        if (this.name == null || this.name == "") {
+        if (this.name === null || this.name === "") {
           uni.hideLoading();
           uni.showModal({
             content: "\u6635\u79F0\u4E0D\u80FD\u4E3A\u7A7A",
             showCancel: false
           });
         } else {
-          if (this.mobile == null || this.mobile == "") {
+          if (this.mobile === null || this.mobile === "") {
             uni.hideLoading();
             uni.showModal({
               content: "\u624B\u673A\u53F7\u4E0D\u80FD\u4E3A\u7A7A",
@@ -3393,14 +3390,12 @@ if (uni.restoreGlobal) {
                   content: "\u6CE8\u518C\u6210\u529F",
                   showCancel: false
                 });
-                formatAppLog("log", "at pages/setting/register/register.vue:79", res);
               }).catch((err) => {
                 uni.hideLoading();
                 uni.showModal({
                   content: "\u6CE8\u518C\u5931\u8D25",
                   showCancel: false
                 });
-                formatAppLog("log", "at pages/setting/register/register.vue:86", err);
               });
             }
           }

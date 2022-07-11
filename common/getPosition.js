@@ -34,7 +34,7 @@ const position = function() {
 		var data = res.result.data;
 		var readDeviceID = data[0].deviceID;
 		console.log("读取设备ID：" + readDeviceID);
-		if (thisdeviceID == readDeviceID) {
+		if (thisdeviceID === readDeviceID) {
 			uni.getLocation({
 				type: 'gcj02', // gcj02为高德定位
 				isHighAccuracy: true, // 高精度定位
@@ -54,7 +54,7 @@ const position = function() {
 								createTime: now()
 							}
 						}).then((res) => {
-							console.log(res)
+							// console.log(res)
 						}).catch((err) =>{
 							console.log(err)
 						});
@@ -71,7 +71,7 @@ const position = function() {
 			content: "请先注册",
 			showCancel: false
 		})
-		console.log(err)
+		// console.log(err)
 	});
 }
 // 导出函数，getPosition是vue调用函数的接口

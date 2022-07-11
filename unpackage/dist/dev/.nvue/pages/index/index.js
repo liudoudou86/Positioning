@@ -56,7 +56,7 @@ const _sfc_main = {
         var data = res.result.data;
         var readDeviceID = data[0].deviceID;
         formatAppLog("log", "at pages/index/index.nvue:59", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
-        if (thisdeviceID == readDeviceID) {
+        if (thisdeviceID === readDeviceID) {
           uni.getLocation({
             type: "gcj02",
             isHighAccuracy: true,
@@ -75,7 +75,6 @@ const _sfc_main = {
                     createTime: time.now()
                   }
                 }).then((res3) => {
-                  formatAppLog("log", "at pages/index/index.nvue:80", res3);
                 }).catch((err) => {
                   formatAppLog("log", "at pages/index/index.nvue:82", err);
                 });
@@ -104,7 +103,6 @@ const _sfc_main = {
           content: "\u8BF7\u5148\u6CE8\u518C",
           showCancel: false
         });
-        formatAppLog("log", "at pages/index/index.nvue:111", err);
       });
     }
   }

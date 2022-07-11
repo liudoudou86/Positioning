@@ -1702,10 +1702,10 @@ const position = function() {
       that.deviceId = res.deviceId;
     },
     fail: function(err) {
-      formatAppLog("log", "at common/getPosition.js:23", err);
+      formatAppLog("log", "at common/getPosition.js:22", err);
     }
   });
-  formatAppLog("log", "at common/getPosition.js:26", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
+  formatAppLog("log", "at common/getPosition.js:25", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
   tn.callFunction({
     name: "readUserData",
     data: {
@@ -1715,7 +1715,7 @@ const position = function() {
     var thisdeviceID = this.deviceId;
     var data = res.result.data;
     var readDeviceID = data[0].deviceID;
-    formatAppLog("log", "at common/getPosition.js:37", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
+    formatAppLog("log", "at common/getPosition.js:36", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
     if (thisdeviceID == readDeviceID) {
       uni.getLocation({
         type: "gcj02",
@@ -1723,8 +1723,8 @@ const position = function() {
         success: function(res2) {
           that.latitude = res2.latitude;
           that.longitude = res2.longitude;
-          formatAppLog("log", "at common/getPosition.js:45", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + that.latitude);
-          formatAppLog("log", "at common/getPosition.js:46", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + that.longitude);
+          formatAppLog("log", "at common/getPosition.js:44", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + that.latitude);
+          formatAppLog("log", "at common/getPosition.js:45", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + that.longitude);
           if (that.latitude != null && that.longitude != null) {
             tn.callFunction({
               name: "insertPositionData",
@@ -1735,14 +1735,14 @@ const position = function() {
                 createTime: now()
               }
             }).then((res3) => {
-              formatAppLog("log", "at common/getPosition.js:58", res3);
+              formatAppLog("log", "at common/getPosition.js:57", res3);
             }).catch((err) => {
-              formatAppLog("log", "at common/getPosition.js:60", err);
+              formatAppLog("log", "at common/getPosition.js:59", err);
             });
           }
         },
         fail: function(err) {
-          formatAppLog("log", "at common/getPosition.js:65", err);
+          formatAppLog("log", "at common/getPosition.js:64", err);
         }
       });
     }
@@ -1752,7 +1752,7 @@ const position = function() {
       content: "\u8BF7\u5148\u6CE8\u518C",
       showCancel: false
     });
-    formatAppLog("log", "at common/getPosition.js:75", err);
+    formatAppLog("log", "at common/getPosition.js:74", err);
   });
 };
 var get = {
@@ -1904,7 +1904,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         default: withCtx(() => [
           createVNode(_component_uni_list_item, {
             "show-switch": true,
-            title: "\u540E\u53F0\u5B9A\u4F4D",
+            title: "\u6301\u7EED\u5B9A\u4F4D",
             onSwitchChange: $options.switchChange
           }, null, 8, ["onSwitchChange"])
         ]),

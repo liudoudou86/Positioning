@@ -717,7 +717,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   }
   var d = true;
   var f = "app";
-  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 57300,\n    "initialLaunchType": "local",\n    "servePort": 57305,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n');
+  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 62051,\n    "initialLaunchType": "local",\n    "servePort": 62052,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n');
   var p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   var y = "";
   try {
@@ -2744,7 +2744,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
           var data = res.result.data;
           var readDeviceID = data[0].deviceID;
           formatAppLog("log", "at pages/index/index.nvue:59", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
-          if (thisdeviceID == readDeviceID) {
+          if (thisdeviceID === readDeviceID) {
             uni.getLocation({
               type: "gcj02",
               isHighAccuracy: true,
@@ -2763,7 +2763,6 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
                       createTime: time.now()
                     }
                   }).then((res3) => {
-                    formatAppLog("log", "at pages/index/index.nvue:80", res3);
                   }).catch((err) => {
                     formatAppLog("log", "at pages/index/index.nvue:82", err);
                   });
@@ -2792,7 +2791,6 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
             content: "\u8BF7\u5148\u6CE8\u518C",
             showCancel: false
           });
-          formatAppLog("log", "at pages/index/index.nvue:111", err);
         });
       }
     }

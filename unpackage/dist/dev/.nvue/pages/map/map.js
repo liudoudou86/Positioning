@@ -1716,7 +1716,7 @@ const position = function() {
     var data = res.result.data;
     var readDeviceID = data[0].deviceID;
     formatAppLog("log", "at common/getPosition.js:36", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
-    if (thisdeviceID == readDeviceID) {
+    if (thisdeviceID === readDeviceID) {
       uni.getLocation({
         type: "gcj02",
         isHighAccuracy: true,
@@ -1735,7 +1735,6 @@ const position = function() {
                 createTime: now()
               }
             }).then((res3) => {
-              formatAppLog("log", "at common/getPosition.js:57", res3);
             }).catch((err) => {
               formatAppLog("log", "at common/getPosition.js:59", err);
             });
@@ -1752,7 +1751,6 @@ const position = function() {
       content: "\u8BF7\u5148\u6CE8\u518C",
       showCancel: false
     });
-    formatAppLog("log", "at common/getPosition.js:74", err);
   });
 };
 var get = {
@@ -1768,7 +1766,7 @@ const _sfc_main = {
   methods: {
     switchChange: function(e) {
       var switchcontrol = e.value;
-      if (switchcontrol == true) {
+      if (switchcontrol === true) {
         timer = setInterval(get.position, 1e4);
         formatAppLog("log", "at pages/map/map.nvue:33", "\u542F\u52A8\u5FAA\u73AF,\u5FAA\u73AFID: " + timer);
         return timer;
@@ -1781,7 +1779,7 @@ const _sfc_main = {
       this.name = e.detail.value;
     },
     getRemoteInfo() {
-      if (this.name == null || this.name == "") {
+      if (this.name === null || this.name === "") {
         uni.hideLoading();
         uni.showModal({
           content: "\u4E0D\u80FD\u4E3A\u7A7A",
@@ -1803,7 +1801,6 @@ const _sfc_main = {
             }
           }).then((res2) => {
             var positionData = res2.result.data;
-            formatAppLog("log", "at pages/map/map.nvue:70", res2);
             const latitude = positionData[0].latitude;
             const longitude = positionData[0].longitude;
             formatAppLog("log", "at pages/map/map.nvue:73", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + latitude);
@@ -1812,7 +1809,6 @@ const _sfc_main = {
               latitude,
               longitude,
               success: function(res3) {
-                formatAppLog("log", "at pages/map/map.nvue:79", res3);
               },
               fail: function(err) {
                 formatAppLog("log", "at pages/map/map.nvue:82", err);
@@ -1827,12 +1823,11 @@ const _sfc_main = {
             content: "\u65E0\u6B64\u7528\u6237",
             showCancel: false
           });
-          formatAppLog("log", "at pages/map/map.nvue:94", err);
         });
       }
     },
     clearPosition() {
-      if (this.name == null || this.name == "") {
+      if (this.name === null || this.name === "") {
         uni.hideLoading();
         uni.showModal({
           content: "\u4E0D\u80FD\u4E3A\u7A7A",
@@ -1853,8 +1848,7 @@ const _sfc_main = {
               deviceID: this.deviceID
             }
           }).then((res2) => {
-            formatAppLog("log", "at pages/map/map.nvue:123", res2);
-            if (res2.result.deleted == "0") {
+            if (res2.result.deleted === 0) {
               formatAppLog("log", "at pages/map/map.nvue:125", res2.deleted);
               uni.hideLoading();
               uni.showModal({
@@ -1874,7 +1868,6 @@ const _sfc_main = {
               content: "\u6E05\u9664\u5931\u8D25",
               showCancel: false
             });
-            formatAppLog("log", "at pages/map/map.nvue:144", err);
           });
         }).catch((err) => {
           uni.hideLoading();
@@ -1882,7 +1875,6 @@ const _sfc_main = {
             content: "\u65E0\u6B64\u7528\u6237",
             showCancel: false
           });
-          formatAppLog("log", "at pages/map/map.nvue:152", err);
         });
       }
     }

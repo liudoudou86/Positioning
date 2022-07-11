@@ -28,7 +28,7 @@
 		methods: {
 			switchChange: function (e) {
 				var switchcontrol = e.value
-				if (switchcontrol == true) { // 创建定时器
+				if (switchcontrol === true) { // 创建定时器
 					timer = setInterval(get.position, 10000);
 					console.log("启动循环,循环ID: " + timer);
 					return timer // 传出结果
@@ -43,7 +43,7 @@
 			},
 			// 获取云数据库位置信息
 			getRemoteInfo() {
-				if (this.name == null || this.name == "") {
+				if (this.name === null || this.name === "") {
 					uni.hideLoading()
 					uni.showModal({
 						content: "不能为空",
@@ -67,7 +67,7 @@
 							}
 						}).then((res) => {
 							var positionData = res.result.data;
-							console.log(res);
+							// console.log(res);
 							const latitude = positionData[0].latitude;
 							const longitude = positionData[0].longitude;
 							console.log("当前纬度：" + latitude);
@@ -76,7 +76,7 @@
 								latitude: latitude,
 								longitude: longitude,
 								success: function(res) {
-									console.log(res)
+									// console.log(res)
 								},
 								fail: function(err) {
 									console.log(err)
@@ -91,13 +91,13 @@
 							content: "无此用户",
 							showCancel: false
 						})
-						console.log(err);
+						// console.log(err);
 					});	
 				}
 			},
 			// 清空云数据库位置信息
 			clearPosition() {
-				if (this.name == null || this.name == "") {
+				if (this.name === null || this.name === "") {
 					uni.hideLoading()
 					uni.showModal({
 						content: "不能为空",
@@ -120,8 +120,8 @@
 								deviceID: this.deviceID
 							}
 						}).then((res) => {
-							console.log(res)
-							if (res.result.deleted == "0") {
+							// console.log(res)
+							if (res.result.deleted === 0) {
 								console.log(res.deleted);
 								uni.hideLoading()
 								uni.showModal({
@@ -141,7 +141,7 @@
 								content: "清除失败",
 								showCancel: false
 							})
-							console.log(err)
+							// console.log(err)
 						});
 					}).catch((err) => {
 						uni.hideLoading()
@@ -149,7 +149,7 @@
 							content: "无此用户",
 							showCancel: false
 						})
-						console.log(err);
+						// console.log(err);
 					});	
 				}	
 			}

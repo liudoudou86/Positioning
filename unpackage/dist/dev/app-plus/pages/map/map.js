@@ -718,7 +718,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
   }
   var d = true;
   var f = "app";
-  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 57300,\n    "initialLaunchType": "local",\n    "servePort": 57305,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n');
+  var g = h('{\n    "address": [\n        "127.0.0.1",\n        "10.16.169.63"\n    ],\n    "debugPort": 62051,\n    "initialLaunchType": "local",\n    "servePort": 62052,\n    "skipFiles": [\n        "<node_internals>/**/*.js",\n        "D:/Coding/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n');
   var p = h('[{"provider":"aliyun","spaceName":"positioning","spaceId":"5260c85d-7565-4ff8-8922-3efa92885a84","clientSecret":"AguDoCV7fAJHQXo/k0FuWQ==","endpoint":"https://api.bspapp.com"}]');
   var y = "";
   try {
@@ -4405,7 +4405,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
       var data = res.result.data;
       var readDeviceID = data[0].deviceID;
       formatAppLog("log", "at common/getPosition.js:36", "\u8BFB\u53D6\u8BBE\u5907ID\uFF1A" + readDeviceID);
-      if (thisdeviceID == readDeviceID) {
+      if (thisdeviceID === readDeviceID) {
         uni.getLocation({
           type: "gcj02",
           isHighAccuracy: true,
@@ -4424,7 +4424,6 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
                   createTime: now()
                 }
               }).then((res3) => {
-                formatAppLog("log", "at common/getPosition.js:57", res3);
               }).catch((err) => {
                 formatAppLog("log", "at common/getPosition.js:59", err);
               });
@@ -4441,7 +4440,6 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
         content: "\u8BF7\u5148\u6CE8\u518C",
         showCancel: false
       });
-      formatAppLog("log", "at common/getPosition.js:74", err);
     });
   };
   var get = {
@@ -4457,7 +4455,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
     methods: {
       switchChange: function(e) {
         var switchcontrol = e.value;
-        if (switchcontrol == true) {
+        if (switchcontrol === true) {
           timer = setInterval(get.position, 1e4);
           formatAppLog("log", "at pages/map/map.nvue:33", "\u542F\u52A8\u5FAA\u73AF,\u5FAA\u73AFID: " + timer);
           return timer;
@@ -4470,7 +4468,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
         this.name = e.detail.value;
       },
       getRemoteInfo() {
-        if (this.name == null || this.name == "") {
+        if (this.name === null || this.name === "") {
           uni.hideLoading();
           uni.showModal({
             content: "\u4E0D\u80FD\u4E3A\u7A7A",
@@ -4492,7 +4490,6 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
               }
             }).then((res2) => {
               var positionData = res2.result.data;
-              formatAppLog("log", "at pages/map/map.nvue:70", res2);
               const latitude = positionData[0].latitude;
               const longitude = positionData[0].longitude;
               formatAppLog("log", "at pages/map/map.nvue:73", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + latitude);
@@ -4501,7 +4498,6 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
                 latitude,
                 longitude,
                 success: function(res3) {
-                  formatAppLog("log", "at pages/map/map.nvue:79", res3);
                 },
                 fail: function(err) {
                   formatAppLog("log", "at pages/map/map.nvue:82", err);
@@ -4516,12 +4512,11 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
               content: "\u65E0\u6B64\u7528\u6237",
               showCancel: false
             });
-            formatAppLog("log", "at pages/map/map.nvue:94", err);
           });
         }
       },
       clearPosition() {
-        if (this.name == null || this.name == "") {
+        if (this.name === null || this.name === "") {
           uni.hideLoading();
           uni.showModal({
             content: "\u4E0D\u80FD\u4E3A\u7A7A",
@@ -4542,8 +4537,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
                 deviceID: this.deviceID
               }
             }).then((res2) => {
-              formatAppLog("log", "at pages/map/map.nvue:123", res2);
-              if (res2.result.deleted == "0") {
+              if (res2.result.deleted === 0) {
                 formatAppLog("log", "at pages/map/map.nvue:125", res2.deleted);
                 uni.hideLoading();
                 uni.showModal({
@@ -4563,7 +4557,6 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
                 content: "\u6E05\u9664\u5931\u8D25",
                 showCancel: false
               });
-              formatAppLog("log", "at pages/map/map.nvue:144", err);
             });
           }).catch((err) => {
             uni.hideLoading();
@@ -4571,7 +4564,6 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
               content: "\u65E0\u6B64\u7528\u6237",
               showCancel: false
             });
-            formatAppLog("log", "at pages/map/map.nvue:152", err);
           });
         }
       }
