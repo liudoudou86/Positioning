@@ -146,20 +146,20 @@
       "list": [
         {
           "pagePath": "pages/index/index",
-          "iconPath": "/static/icons/component.png",
-          "selectedIconPath": "/static/icons/componentHL.png",
+          "iconPath": "/static/tabbar/component.png",
+          "selectedIconPath": "/static/tabbar/componentHL.png",
           "text": "定位"
         },
         {
           "pagePath": "pages/map/map",
-          "iconPath": "/static/icons/extui.png",
-          "selectedIconPath": "/static/icons/extuiHL.png",
+          "iconPath": "/static/tabbar/extui.png",
+          "selectedIconPath": "/static/tabbar/extuiHL.png",
           "text": "足迹"
         },
         {
           "pagePath": "pages/setting/setting",
-          "iconPath": "/static/icons/template.png",
-          "selectedIconPath": "/static/icons/templateHL.png",
+          "iconPath": "/static/tabbar/template.png",
+          "selectedIconPath": "/static/tabbar/templateHL.png",
           "text": "设置"
         }
       ],

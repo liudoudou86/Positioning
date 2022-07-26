@@ -386,20 +386,20 @@ const tabBar = {
   list: [
     {
       pagePath: "pages/index/index",
-      iconPath: "static/icons/component.png",
-      selectedIconPath: "static/icons/componentHL.png",
+      iconPath: "static/tabbar/component.png",
+      selectedIconPath: "static/tabbar/componentHL.png",
       text: "\u5B9A\u4F4D"
     },
     {
       pagePath: "pages/map/map",
-      iconPath: "static/icons/extui.png",
-      selectedIconPath: "static/icons/extuiHL.png",
+      iconPath: "static/tabbar/extui.png",
+      selectedIconPath: "static/tabbar/extuiHL.png",
       text: "\u8DB3\u8FF9"
     },
     {
       pagePath: "pages/setting/setting",
-      iconPath: "static/icons/template.png",
-      selectedIconPath: "static/icons/templateHL.png",
+      iconPath: "static/tabbar/template.png",
+      selectedIconPath: "static/tabbar/templateHL.png",
       text: "\u8BBE\u7F6E"
     }
   ]
