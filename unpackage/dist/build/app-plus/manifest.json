@@ -4,7 +4,7 @@
     "iPhone",
     "iPad"
   ],
-  "id": "__UNI__BA53D3D",
+  "id": "__UNI__370E632",
   "name": "阿丘比特",
   "version": {
     "name": "1.0.0",
@@ -81,7 +81,9 @@
         "autoSdkPermissions": true,
         "minSdkVersion": 21
       },
-      "apple": {},
+      "apple": {
+        "dSYMs": false
+      },
       "plugins": {
         "ad": {},
         "maps": {
@@ -124,7 +126,7 @@
     "uni-app": {
       "control": "uni-v3",
       "vueVersion": "3",
-      "compilerVersion": "3.4.18",
+      "compilerVersion": "3.5.3",
       "nvueCompiler": "uni-app",
       "renderer": "auto",
       "nvue": {

@@ -1,4 +1,4 @@
-import { i as isString, f as formatAppLog, t as tn } from "../../uni-cloud.es.js";
+import { i as isString, f as formatAppLog, r as rn } from "../../uni-cloud.es.js";
 import { openBlock, createElementBlock, normalizeStyle, toDisplayString, renderSlot, normalizeClass, createCommentVNode, resolveDynamicComponent, resolveComponent, createElementVNode, createVNode, createBlock, withCtx, createTextVNode } from "vue";
 import { _ as _export_sfc } from "../../plugin-vue_export-helper.js";
 var icons = {
@@ -1706,7 +1706,7 @@ const position = function() {
     }
   });
   formatAppLog("log", "at common/getPosition.js:25", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
-  tn.callFunction({
+  rn.callFunction({
     name: "readUserData",
     data: {
       deviceID: this.deviceId
@@ -1726,7 +1726,7 @@ const position = function() {
           formatAppLog("log", "at common/getPosition.js:44", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + that.latitude);
           formatAppLog("log", "at common/getPosition.js:45", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + that.longitude);
           if (that.latitude != null && that.longitude != null) {
-            tn.callFunction({
+            rn.callFunction({
               name: "insertPositionData",
               data: {
                 deviceID: thisdeviceID,
@@ -1786,7 +1786,7 @@ const _sfc_main = {
           showCancel: false
         });
       } else {
-        tn.callFunction({
+        rn.callFunction({
           name: "readUserData",
           data: {
             userName: this.name
@@ -1794,7 +1794,7 @@ const _sfc_main = {
         }).then((res) => {
           var deviceData = res.result.data;
           this.deviceID = deviceData[0].deviceID;
-          tn.callFunction({
+          rn.callFunction({
             name: "readPositionData",
             data: {
               deviceID: this.deviceID
@@ -1834,7 +1834,7 @@ const _sfc_main = {
           showCancel: false
         });
       } else {
-        tn.callFunction({
+        rn.callFunction({
           name: "readUserData",
           data: {
             userName: this.name
@@ -1842,7 +1842,7 @@ const _sfc_main = {
         }).then((res) => {
           var deviceData = res.result.data;
           this.deviceID = deviceData[0].deviceID;
-          tn.callFunction({
+          rn.callFunction({
             name: "clearPositionData",
             data: {
               deviceID: this.deviceID

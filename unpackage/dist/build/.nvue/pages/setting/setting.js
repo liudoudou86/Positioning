@@ -1,5 +1,6 @@
 import { resolveComponent, openBlock, createElementBlock, createElementVNode, createVNode, withCtx, createTextVNode } from "vue";
 import { _ as _export_sfc } from "../../plugin-vue_export-helper.js";
+var _style_0 = { "uni-btn-v": { "": { "marginTop": "50rpx", "marginBottom": "50rpx", "marginLeft": "50rpx", "marginRight": "50rpx" } }, "navigator-hover": { "": { "marginTop": "50rpx", "marginBottom": "50rpx" } } };
 const _sfc_main = {
   data() {
     return {};
@@ -54,5 +55,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-var setting = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
+var setting = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render], ["styles", [_style_0]]]);
 export { setting as default };

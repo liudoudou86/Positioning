@@ -1,4 +1,4 @@
-import { f as formatAppLog, t as tn } from "../../uni-cloud.es.js";
+import { f as formatAppLog, r as rn } from "../../uni-cloud.es.js";
 import { resolveComponent, openBlock, createElementBlock, createElementVNode, normalizeStyle, createVNode, withCtx, createTextVNode } from "vue";
 import { _ as _export_sfc } from "../../plugin-vue_export-helper.js";
 const now = function() {
@@ -46,7 +46,7 @@ const _sfc_main = {
         }
       });
       formatAppLog("log", "at pages/index/index.nvue:48", "\u672C\u673A\u8BBE\u5907ID\uFF1A" + this.deviceId);
-      tn.callFunction({
+      rn.callFunction({
         name: "readUserData",
         data: {
           deviceID: this.deviceId
@@ -66,7 +66,7 @@ const _sfc_main = {
               formatAppLog("log", "at pages/index/index.nvue:67", "\u5F53\u524D\u7EAC\u5EA6\uFF1A" + that.latitude);
               formatAppLog("log", "at pages/index/index.nvue:68", "\u5F53\u524D\u7ECF\u5EA6\uFF1A" + that.longitude);
               if (that.latitude != null && that.longitude != null) {
-                tn.callFunction({
+                rn.callFunction({
                   name: "insertPositionData",
                   data: {
                     deviceID: thisdeviceID,
